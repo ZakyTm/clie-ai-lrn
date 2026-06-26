@@ -1,0 +1,65 @@
+---
+import type { Concept } from '../../types';
+
+interface Props {
+  concept: Concept;
+}
+
+const { concept } = Astro.props;
+
+// Class mappings for difficulty styling
+const difficultyClasses = {
+  beginner: 'text-[var(--success)] border-[var(--success)] bg-[var(--success)]/5',
+  intermediate: 'text-[var(--accent)] border-[var(--accent)] bg-[var(--accent)]/5',
+  advanced: 'text-[var(--error)] border-[var(--error)] bg-[var(--error)]/5'
+};
+---
+
+<article class="figure-frame group flex flex-col justify-between p-6 hover:border-accent hover:shadow-md transition-all duration-fast">
+  <!-- Corner Marks (pi.dev signature style) -->
+  <div class="figure-corner figure-corner--tl"></div>
+  <div class="figure-corner figure-corner--tr"></div>
+  <div class="figure-corner figure-corner--bl"></div>
+  <div class="figure-corner figure-corner--br"></div>
+
+  <div>
+    <!-- Top Meta row -->
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-4 font-mono text-[10px]">
+      <div class="flex items-center space-x-2">
+        <span class={`px-2 py-0.5 border rounded-sm font-semibold uppercase tracking-wider text-[9px] ${difficultyClasses[concept.difficulty]}`}>
+          {concept.difficulty}
+        </span>
+        <span class="text-muted tracking-wider">
+          {concept.readTimeMinutes} MIN READ
+        </span>
+      </div>
+      <span class="px-1.5 py-0.5 border border-subtle bg-surface text-muted rounded-sm tracking-wider">
+        {concept.sourceRepo === 'manual' ? 'MANUAL' : 'UPSTREAM'}
+      </span>
+    </div>
+
+    <!-- Title -->
+    <h3 class="mb-3 text-xl font-serif leading-snug group-hover:text-accent transition-colors duration-fast">
+      <a href={`/knowledge/${concept.id}`}>
+        {concept.title}
+      </a>
+    </h3>
+
+    <!-- Summary -->
+    <p class="text-secondary text-sm line-clamp-3 mb-6 font-serif">
+      {concept.summary}
+    </p>
+  </div>
+
+  <!-- Bottom: Domains & Tags -->
+  <div class="flex flex-wrap items-center gap-2 border-t border-subtle/50 pt-4">
+    {concept.domains.map(domainId => (
+      <a 
+        href={`/domains/${domainId}`} 
+        class="font-mono text-[10px] tracking-wider text-muted hover:text-accent uppercase"
+      >
+        @{domainId}
+      </a>
+    ))}
+  </div>
+</article>

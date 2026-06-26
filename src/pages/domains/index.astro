@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Breadcrumb from '../../components/layout/Breadcrumb.astro';
+
+import domains from '../../data/domains.json';
+---
+
+<Base title="Domains Directory — AI Engineering Hub" description="Browse AI engineering knowledge mapped by core domains.">
+  <Header activeTab="domains" />
+
+  <main class="flex-grow container-site py-8">
+    <Breadcrumb items={[{ label: 'DOMAINS', href: '/domains' }]} />
+
+    <div class="mb-10 max-w-2xl">
+      <h1 class="font-serif text-3xl font-bold mb-2">Domains Directory</h1>
+      <p class="text-secondary text-sm font-serif">
+        Explore structured knowledge domains of modern AI engineering, from model foundations to multi-agent swarms.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {domains.map(domain => (
+        <a 
+          href={`/domains/${domain.id}`} 
+          class="figure-frame group p-6 hover:border-accent hover:bg-surface/10 transition-all duration-fast"
+        >
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+          
+          <div class="flex flex-col justify-between h-full">
+            <div>
+              <div class="font-mono text-[9px] text-muted tracking-wider uppercase mb-2">
+                SECTION_0{domain.order}
+              </div>
+              <h3 class="text-lg font-serif font-bold group-hover:text-accent transition-colors duration-fast mb-3">
+                {domain.title}
+              </h3>
+              <p class="text-secondary text-sm font-serif mb-6">
+                {domain.description}
+              </p>
+            </div>
+
+            <div class="border-t border-subtle/50 pt-4 flex justify-between items-center font-mono text-xs">
+              <span class="text-muted">CONCEPTS:</span>
+              <span class="font-bold border border-subtle px-2 py-0.5 rounded bg-surface">
+                {domain.conceptCount}
+              </span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </main>
+
+  <Footer />
+</Base>

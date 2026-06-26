@@ -1,0 +1,33 @@
+---
+import fs from 'fs';
+import path from 'path';
+import Base from '../layouts/Base.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Breadcrumb from '../components/layout/Breadcrumb.astro';
+import { marked } from 'marked';
+
+// Read Security guide from root
+const rootPath = path.resolve(process.cwd(), 'SECURITY.md');
+const content = fs.readFileSync(rootPath, 'utf-8');
+const parsedHTML = marked.parse(content);
+---
+
+<Base title="Security Policy — AI Engineering Hub" description="Vulnerability reporting and security policy for the AI Engineering Knowledge Hub.">
+  <Header />
+
+  <main class="flex-grow container-site py-8">
+    <Breadcrumb items={[{ label: 'SECURITY' }]} />
+
+    <div class="figure-frame p-8 md:p-12">
+      <div class="figure-corner figure-corner--tl"></div>
+      <div class="figure-corner figure-corner--tr"></div>
+      <div class="figure-corner figure-corner--bl"></div>
+      <div class="figure-corner figure-corner--br"></div>
+
+      <article class="prose-manual" set:html={parsedHTML} />
+    </div>
+  </main>
+
+  <Footer />
+</Base>

@@ -1,11 +1,181 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Base from '../layouts/Base.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import ConceptCard from '../components/concept/ConceptCard.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import domains from '../data/domains.json';
+import buildMeta from '../data/build-meta.json';
+import concepts from '../data/concepts.json';
+
+// Fetch featured concepts (specifically our manual ones)
+const featuredConcepts = concepts
+  .filter((c: any) => c.featured)
+  .slice(0, 5);
+
+// Fetch recent concepts (from rohitg00 repository)
+const recentConcepts = concepts
+  .filter((c: any) => !c.featured && c.sourceRepo !== 'manual')
+  .slice(0, 3);
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<Base title="AI Engineering Knowledge Hub — The Manual" description="Structured, search-ready developer knowledge for building AI systems. Ingested from top open source sources.">
+  <Header activeTab="home" />
+
+  <main class="flex-grow">
+    <!-- Hero Section -->
+    <section class="border-b border-subtle py-12 md:py-20 bg-surface/30">
+      <div class="container-site">
+        <div class="figure-frame p-6 md:p-8 bg-deep border-accent/40 max-w-4xl mx-auto">
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+
+          <!-- ASCII Art Title - hidden on mobile for layout safety -->
+          <div class="hidden sm:block text-[9px] leading-[1.1] font-mono text-accent/80 select-none overflow-x-auto mb-8 whitespace-pre">
+{`   _   ___   _____ _   _  _____ _   _  _____ _____ _____ _____ _   _ _____ 
+  / | |_ _| | ____| \\ | |/ ____| | | |/ ____|_   _|  ___|  ___| \\ | |  ___|
+ /  |  | |  |  _| |  \\| | |  __| | | | |      | | | |_  | |_  |  \\| | |__  
+/ / |  | |  | |___| |\\  | |__|_| |_| | |____ _| |_|  _| |  _| | |\\  | |___ 
+/_/  |_|___| |_____|_| \\_|\\_____|\\___/\\_____|_____|_|   |_|   |_| \\_|_____|`}
+          </div>
+
+          <div class="sm:hidden font-mono font-bold text-xl text-accent mb-4 tracking-wider">
+            [AI_ENGINEERING_HUB]
+          </div>
+
+          <p class="font-serif text-base md:text-lg text-primary max-w-2xl mb-8 leading-relaxed">
+            A live, compiled manual organizing scattered AI engineering patterns into clear, structured domains. Formatted like a Unix man page crossed with a physical engineering handbook.
+          </p>
+
+          <!-- Prompt bar interface -->
+          <div class="flex flex-col sm:flex-row gap-3 font-mono text-xs max-w-xl">
+            <div class="flex-grow flex items-center gap-2 border border-subtle rounded-md bg-canvas/50 px-3 py-2 text-secondary">
+              <span class="text-accent">$</span>
+              <span class="text-muted">READY: search the manual...</span>
+            </div>
+            <a 
+              href="/search" 
+              class="flex-shrink-0 text-center px-4 py-2 border border-accent bg-accent-muted text-accent font-bold rounded-md hover:bg-accent/20 hover:text-accent-hover transition-colors"
+            >
+              QUERY_DB()
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="border-b border-subtle py-4 bg-surface/10 font-mono text-xs">
+      <div class="container-site flex flex-wrap justify-around gap-4 text-center">
+        <div>
+          <span class="text-muted">DOMAINS:</span> <span class="text-primary font-bold">[{buildMeta.domainCount}]</span>
+        </div>
+        <div class="border-l border-subtle/50 h-4 hidden sm:block"></div>
+        <div>
+          <span class="text-muted">CONCEPTS:</span> <span class="text-primary font-bold">[{buildMeta.conceptCount}]</span>
+        </div>
+        <div class="border-l border-subtle/50 h-4 hidden sm:block"></div>
+        <div>
+          <span class="text-muted">RESOURCES:</span> <span class="text-primary font-bold">[{buildMeta.resourceCount}]</span>
+        </div>
+        <div class="border-l border-subtle/50 h-4 hidden sm:block"></div>
+        <div class="hidden md:block">
+          <span class="text-muted">STATUS:</span> <span class="text-[var(--success)] font-bold">[SYNCED]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Domains Directory -->
+    <section class="py-16 border-b border-subtle">
+      <div class="container-site">
+        <h2 class="font-mono text-xs uppercase tracking-widest text-muted mb-8">// DIRECTORY_DOMAINS</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {domains.map(domain => (
+            <a 
+              href={`/domains/${domain.id}`} 
+              class="figure-frame group p-6 hover:border-accent hover:shadow-sm transition-all duration-fast"
+            >
+              <div class="figure-corner figure-corner--tl"></div>
+              <div class="figure-corner figure-corner--tr"></div>
+              <div class="figure-corner figure-corner--bl"></div>
+              <div class="figure-corner figure-corner--br"></div>
+              
+              <div class="flex justify-between items-start gap-4">
+                <div>
+                  <div class="font-mono text-[9px] tracking-wider uppercase text-muted mb-2">
+                    SECTION_0{domain.order}
+                  </div>
+                  <h3 class="text-lg font-serif font-bold group-hover:text-accent transition-colors mb-2">
+                    {domain.title}
+                  </h3>
+                  <p class="text-secondary text-sm font-serif line-clamp-3">
+                    {domain.description}
+                  </p>
+                </div>
+                <div class="font-mono text-xs border border-subtle rounded px-2 py-0.5 bg-surface text-muted">
+                  {domain.conceptCount}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Concepts (The Core Manual) -->
+    <section class="py-16 bg-surface/5">
+      <div class="container-site">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+          <div>
+            <h2 class="font-mono text-xs uppercase tracking-widest text-muted">// CORE_MANUAL_CONCEPTS</h2>
+            <p class="text-sm font-serif text-secondary mt-1">Foundational components of robust AI applications, hand-authored for clarity.</p>
+          </div>
+          <a href="/knowledge" class="font-mono text-xs text-accent hover:underline uppercase flex items-center gap-1">
+            VIEW_ALL_CONCEPTS ({buildMeta.conceptCount}) ↗
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredConcepts.map(concept => (
+            <ConceptCard concept={concept} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Recently Synced (From upstream courses) -->
+    {recentConcepts.length > 0 && (
+      <section class="py-16 border-t border-subtle">
+        <div class="container-site">
+          <h2 class="font-mono text-xs uppercase tracking-widest text-muted mb-8">// RECENTLY_SYNCED_LESSONS</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {recentConcepts.map(concept => (
+              <div class="border border-subtle p-5 rounded-md hover:border-accent transition-colors flex flex-col justify-between">
+                <div>
+                  <span class="font-mono text-[9px] text-muted block mb-2 uppercase">[{concept.difficulty}] • {concept.readTimeMinutes} min read</span>
+                  <h4 class="text-base font-serif font-bold mb-2">
+                    <a href={`/knowledge/${concept.id}`} class="hover:text-accent">
+                      {concept.title}
+                    </a>
+                  </h4>
+                  <p class="text-secondary text-xs font-serif line-clamp-2">
+                    {concept.summary}
+                  </p>
+                </div>
+                <div class="border-t border-subtle/50 mt-4 pt-3 flex justify-between items-center text-[10px] font-mono text-muted">
+                  <span>@{concept.domains[0]}</span>
+                  <span>SYNCED</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+
+  <Footer />
+</Base>

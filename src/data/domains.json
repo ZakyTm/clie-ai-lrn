@@ -1,0 +1,83 @@
+[
+  {
+    "id": "llm-foundations",
+    "title": "LLM Foundations",
+    "description": "Core mechanics of large language models, including tokenization, architectures, decoding, and non-determinism.",
+    "icon": "book-open",
+    "color": "blue",
+    "conceptCount": 249,
+    "order": 1
+  },
+  {
+    "id": "prompt-engineering",
+    "title": "Prompt Engineering",
+    "description": "Techniques for steering model output, including Chain of Thought, few-shot prompting, and system instructions.",
+    "icon": "terminal",
+    "color": "green",
+    "conceptCount": 27,
+    "order": 2
+  },
+  {
+    "id": "rag",
+    "title": "Retrieval-Augmented Generation",
+    "description": "Connecting LLMs to external data sources via chunking, document parsing, and semantic search queries.",
+    "icon": "database",
+    "color": "yellow",
+    "conceptCount": 6,
+    "order": 3
+  },
+  {
+    "id": "embeddings-vectors",
+    "title": "Vector DBs & Embeddings",
+    "description": "High-dimensional vector representations of text/media and the database architectures designed to index and query them.",
+    "icon": "network",
+    "color": "purple",
+    "conceptCount": 12,
+    "order": 4
+  },
+  {
+    "id": "agents",
+    "title": "Agent Engineering",
+    "description": "Autonomous loops where language models plan, select and execute tools, evaluate results, and handle stateful actions.",
+    "icon": "cpu",
+    "color": "red",
+    "conceptCount": 94,
+    "order": 5
+  },
+  {
+    "id": "mcp-tooling",
+    "title": "MCP & Tooling",
+    "description": "The Model Context Protocol and the tool definitions, environments, and sandboxes that let LLMs interact with systems.",
+    "icon": "wrench",
+    "color": "pink",
+    "conceptCount": 24,
+    "order": 6
+  },
+  {
+    "id": "fine-tuning",
+    "title": "Fine-Tuning & Alignment",
+    "description": "Adapting models to specific tasks or domains using supervised fine-tuning, LoRA, and preference optimization (RLHF, DPO).",
+    "icon": "sliders",
+    "color": "indigo",
+    "conceptCount": 38,
+    "order": 7
+  },
+  {
+    "id": "infrastructure-ops",
+    "title": "LLMOps & Production",
+    "description": "Serving, deploying, and monitoring LLMs in production, including caching, latency optimization, and cost management.",
+    "icon": "server",
+    "color": "cyan",
+    "conceptCount": 130,
+    "order": 8
+  },
+  {
+    "id": "ethics-safety",
+    "title": "Ethics & Safety",
+    "description": "Understanding model alignment, bias mitigation, guardrails, and handling potential adversarial inputs.",
+    "icon": "shield-check",
+    "color": "teal",
+    "conceptCount": 34,
+    "order": 9
+  }
+]

@@ -1,1 +1,320 @@
 @import "tailwindcss";
+
+/* ─── Fonts (self-hosted, GDPR-safe) ─── */
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+@import "@fontsource/jetbrains-mono/700.css";
+
+/* ─── Design Tokens — adapted from pi.dev ─── */
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+
+    /* Named palette */
+    --color-parchment: #dacbc2;
+    --color-moonstone: #ebe7e4;
+    --color-driftwood: #5c5752;
+    --color-evening-blue: #252f3d;
+    --color-tidal-blue: #4b607c;
+    --color-accent-blue: #6a9fcc;
+    --color-warm-black: #13110f;
+    --color-warm-white: #f3f2f0;
+
+    /* Font stacks */
+    --font-serif: "Source Serif 4 Variable", "Source Serif Pro", Georgia, "Times New Roman", serif;
+    --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+    /* Type scale */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 2rem;
+    --text-4xl: 2.5rem;
+
+    /* Spacing base */
+    --space-unit: 0.25rem;
+
+    /* Layout */
+    --max-content: 1280px;
+    --sidebar-width: 240px;
+    --prose-max: 72ch;
+
+    /* Radii */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+
+    /* Transitions */
+    --duration-fast: 150ms;
+    --duration-normal: 300ms;
+    --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ─── Dark theme (default) ─── */
+  :root,
+  [data-theme="dark"] {
+    --bg-deep: #0d1116;
+    --bg-canvas: #161d27;
+    --bg-surface: #212730;
+    --bg-elevated: #252f3d;
+    --border-subtle: #49505980;
+    --border-default: #757d8975;
+    --text-primary: #ebe7e4;
+    --text-secondary: #d5d8dbad;
+    --text-muted: #9fa4abad;
+    --accent: #6a9fcc;
+    --accent-hover: #8bb8dd;
+    --accent-muted: #6a9fcc20;
+    --accent-surface: #6a9fcc0e;
+    --accent-border: #6a9fcc66;
+    --success: #5db87a;
+    --warning: #e8993a;
+    --error: #e8704f;
+    --panel: #212730e6;
+    --panel-soft: #252f3dd1;
+    --selection-bg: #6a9fcc3d;
+    --scrollbar-thumb: #2f5f8a47;
+    --scrollbar-thumb-hover: #2f5f8a66;
+    --code-bg: #142433;
+    --code-border: #6a9fcc10;
+    --figure-corner: #49505960;
+  }
+
+  /* ─── Light theme ─── */
+  [data-theme="light"] {
+    color-scheme: light;
+    --bg-deep: #dacbc2;
+    --bg-canvas: #ebe7e4;
+    --bg-surface: #f4f2f0;
+    --bg-elevated: #ffffff;
+    --border-subtle: #8b847d40;
+    --border-default: #5c575240;
+    --text-primary: #252f3df5;
+    --text-secondary: #384251dc;
+    --text-muted: #5c5752c4;
+    --accent: #4b607c;
+    --accent-hover: #3a4d66;
+    --accent-muted: #4b607c18;
+    --accent-surface: #4b607c0c;
+    --accent-border: #4b607c57;
+    --success: #2d8a4e;
+    --warning: #b8751e;
+    --error: #c4472a;
+    --panel: #f4f2f0;
+    --panel-soft: #eef1f3;
+    --selection-bg: #4b607c24;
+    --scrollbar-thumb: #8b847d40;
+    --scrollbar-thumb-hover: #8b847d66;
+    --code-bg: #f0ece8;
+    --code-border: #4b607c18;
+    --figure-corner: #8b847d50;
+  }
+
+  /* ─── Base styles ─── */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 18px;
+    scroll-behavior: smooth;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+  }
+
+  body {
+    font-family: var(--font-serif);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--text-primary);
+    background-color: var(--bg-canvas);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color var(--duration-normal) var(--easing-default),
+                color var(--duration-normal) var(--easing-default);
+  }
+
+  ::selection {
+    background-color: var(--selection-bg);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--easing-default);
+  }
+
+  a:hover {
+    color: var(--accent-hover);
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* ─── Mono labels (pi.dev "Fig. 01" style) ─── */
+  .label,
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+
+  /* ─── Terminal prompt prefix ─── */
+  .shell-prompt::before {
+    content: "$ ";
+    color: var(--text-muted);
+    user-select: none;
+  }
+
+  /* ─── Figure frame (pi.dev signature) ─── */
+  .figure-frame {
+    position: relative;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    overflow: hidden;
+  }
+
+  .figure-frame .figure-corner {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-color: var(--figure-corner);
+    border-style: solid;
+    z-index: 1;
+  }
+
+  .figure-corner--tl { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+  .figure-corner--tr { top: -1px; right: -1px; border-width: 1px 1px 0 0; }
+  .figure-corner--bl { bottom: -1px; left: -1px; border-width: 0 0 1px 1px; }
+  .figure-corner--br { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0.5rem 1rem;
+    border-top: 1px solid var(--border-subtle);
+    text-align: center;
+  }
+
+  /* ─── Code blocks ─── */
+  pre {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    color: var(--text-primary);
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+
+  :not(pre) > code {
+    background: var(--accent-surface);
+    border: 1px solid var(--code-border);
+    border-radius: var(--radius-sm);
+    padding: 0.15em 0.4em;
+    color: var(--text-primary);
+  }
+
+  /* ─── Headings ─── */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  h1 { font-size: var(--text-4xl); }
+  h2 { font-size: var(--text-3xl); }
+  h3 { font-size: var(--text-2xl); }
+  h4 { font-size: var(--text-xl); }
+
+  /* ─── Scrollbar ─── */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+}
+
+/* ─── Utility classes ─── */
+@layer utilities {
+  .container-site {
+    width: 100%;
+    max-width: var(--max-content);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .prose-width {
+    max-width: var(--prose-max);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+
+  .text-accent {
+    color: var(--accent);
+  }
+
+  .bg-surface {
+    background-color: var(--bg-surface);
+  }
+
+  .bg-elevated {
+    background-color: var(--bg-elevated);
+  }
+
+  .border-subtle {
+    border-color: var(--border-subtle);
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+}

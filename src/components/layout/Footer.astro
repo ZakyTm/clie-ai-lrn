@@ -1,0 +1,41 @@
+---
+import buildMeta from '../../data/build-meta.json';
+
+const lastSyncedDate = new Date(buildMeta.lastSynced).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  timeZoneName: 'short'
+});
+---
+
+<footer class="mt-auto border-t border-subtle bg-canvas py-8 text-secondary font-mono text-xs transition-colors duration-normal">
+  <div class="container-site flex flex-col md:flex-row items-center justify-between gap-6">
+    <!-- Left: Title & Attribution -->
+    <div class="flex flex-col gap-1 text-center md:text-left">
+      <div class="font-bold tracking-wider uppercase text-primary">
+        AI_ENGINEERING_HUB <span class="text-accent">v0.1.0</span>
+      </div>
+      <div class="text-muted">
+        Licensed under the <a href="https://github.com/DietrichGebert/ponytail/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="underline hover:text-accent">MIT License</a>.
+      </div>
+    </div>
+
+    <!-- Center: Last Synced Info -->
+    <div class="text-center text-muted">
+      <div>BUILD_META: [OK]</div>
+      <div class="text-[10px] tracking-wide uppercase">
+        LAST_SYNC: {lastSyncedDate}
+      </div>
+    </div>
+
+    <!-- Right: Internal documentation & contributing links -->
+    <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2 uppercase tracking-widest text-[10px]">
+      <a href="/contributing" class="hover:text-accent transition-colors duration-fast">[CONTRIBUTING]</a>
+      <a href="/attributions" class="hover:text-accent transition-colors duration-fast">[ATTRIBUTIONS]</a>
+      <a href="/security" class="hover:text-accent transition-colors duration-fast">[SECURITY]</a>
+    </nav>
+  </div>
+</footer>
