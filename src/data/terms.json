@@ -19,7 +19,7 @@
       "https://en.wikipedia.org/wiki/Autonomic_computing",
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.000Z"
+    "lastUpdated": "2026-06-28T22:38:09.364Z"
   },
   {
     "id": "agent-mode",
@@ -40,7 +40,7 @@
       "https://modelcontextprotocol.io",
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.003Z"
+    "lastUpdated": "2026-06-28T22:38:09.367Z"
   },
   {
     "id": "agent",
@@ -62,7 +62,7 @@
       "https://lilianweng.github.io/posts/2023-06-23-agent/",
       "https://github.com/langchain-ai/langgraph"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.004Z"
+    "lastUpdated": "2026-06-28T22:38:09.368Z"
   },
   {
     "id": "agents",
@@ -82,7 +82,7 @@
       "https://lilianweng.github.io/posts/2023-06-23-agent/",
       "https://github.com/langchain-ai/langgraph"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.005Z"
+    "lastUpdated": "2026-06-28T22:38:09.369Z"
   },
   {
     "id": "agentsmd",
@@ -104,7 +104,7 @@
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching",
       "https://platform.openai.com/docs/guides/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.007Z"
+    "lastUpdated": "2026-06-28T22:38:09.370Z"
   },
   {
     "id": "ai",
@@ -126,7 +126,7 @@
       "https://en.wikipedia.org/wiki/AI_effect",
       "https://web.stanford.edu/~jmc/whatisai.html"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.007Z"
+    "lastUpdated": "2026-06-28T22:38:09.371Z"
   },
   {
     "id": "attention-budget",
@@ -147,7 +147,7 @@
       "https://arxiv.org/abs/1706.03762",
       "https://arxiv.org/abs/2307.03172"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.008Z"
+    "lastUpdated": "2026-06-28T22:38:09.372Z"
   },
   {
     "id": "attention-degradation",
@@ -169,7 +169,7 @@
       "https://arxiv.org/abs/2307.03172",
       "https://arxiv.org/abs/2311.05232"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.009Z"
+    "lastUpdated": "2026-06-28T22:38:09.373Z"
   },
   {
     "id": "attention-relationship",
@@ -191,7 +191,7 @@
       "https://arxiv.org/abs/1706.03762",
       "https://arxiv.org/abs/2307.03172"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.010Z"
+    "lastUpdated": "2026-06-28T22:38:09.374Z"
   },
   {
     "id": "autocompact",
@@ -213,7 +213,7 @@
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching",
       "https://platform.openai.com/docs/guides/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.011Z"
+    "lastUpdated": "2026-06-28T22:38:09.376Z"
   },
   {
     "id": "automated-check",
@@ -235,7 +235,7 @@
       "https://en.wikipedia.org/wiki/Software_testing",
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.013Z"
+    "lastUpdated": "2026-06-28T22:38:09.378Z"
   },
   {
     "id": "automated-review",
@@ -257,7 +257,7 @@
       "https://en.wikipedia.org/wiki/Code_review",
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.014Z"
+    "lastUpdated": "2026-06-28T22:38:09.380Z"
   },
   {
     "id": "ax",
@@ -279,7 +279,7 @@
       "https://modelcontextprotocol.io",
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.015Z"
+    "lastUpdated": "2026-06-28T22:38:09.381Z"
   },
   {
     "id": "cache-tokens",
@@ -300,7 +300,7 @@
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching",
       "https://platform.openai.com/docs/guides/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.016Z"
+    "lastUpdated": "2026-06-28T22:38:09.383Z"
   },
   {
     "id": "clearing",
@@ -322,7 +322,7 @@
       "https://en.wikipedia.org/wiki/Session_(computer_science)",
       "https://docs.anthropic.com/en/docs/about-claude/models"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.017Z"
+    "lastUpdated": "2026-06-28T22:38:09.384Z"
   },
   {
     "id": "compaction",
@@ -344,7 +344,7 @@
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching",
       "https://platform.openai.com/docs/guides/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.018Z"
+    "lastUpdated": "2026-06-28T22:38:09.385Z"
   },
   {
     "id": "context-pointer",
@@ -366,7 +366,7 @@
       "https://en.wikipedia.org/wiki/Pointer_(computer_science)",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.018Z"
+    "lastUpdated": "2026-06-28T22:38:09.386Z"
   },
   {
     "id": "context-window",
@@ -388,7 +388,7 @@
       "https://platform.openai.com/docs/guides/window-sizes",
       "https://docs.anthropic.com/en/docs/about-claude/models"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.019Z"
+    "lastUpdated": "2026-06-28T22:38:09.387Z"
   },
   {
     "id": "context",
@@ -409,7 +409,7 @@
       "https://en.wikipedia.org/wiki/In-context_learning_(machine_learning)",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.020Z"
+    "lastUpdated": "2026-06-28T22:38:09.388Z"
   },
   {
     "id": "contextual-knowledge",
@@ -431,7 +431,7 @@
       "https://en.wikipedia.org/wiki/In-context_learning_(machine_learning)",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.021Z"
+    "lastUpdated": "2026-06-28T22:38:09.390Z"
   },
   {
     "id": "design-concept",
@@ -452,7 +452,7 @@
       "https://en.wikipedia.org/wiki/Fred_Brooks",
       "https://en.wikipedia.org/wiki/Socratic_method"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.022Z"
+    "lastUpdated": "2026-06-28T22:38:09.390Z"
   },
   {
     "id": "dx",
@@ -474,7 +474,7 @@
       "https://en.wikipedia.org/wiki/Developer_experience",
       "https://modelcontextprotocol.io"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.023Z"
+    "lastUpdated": "2026-06-28T22:38:09.391Z"
   },
   {
     "id": "embeddings",
@@ -494,7 +494,7 @@
       "https://openai.com/index/introducing-text-and-code-embeddings/",
       "https://huggingface.co/sentence-transformers"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.024Z"
+    "lastUpdated": "2026-06-28T22:38:09.392Z"
   },
   {
     "id": "environment",
@@ -516,7 +516,7 @@
       "https://en.wikipedia.org/wiki/Execution_environment",
       "https://modelcontextprotocol.io"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.025Z"
+    "lastUpdated": "2026-06-28T22:38:09.392Z"
   },
   {
     "id": "filesystem",
@@ -538,7 +538,7 @@
       "https://en.wikipedia.org/wiki/File_system",
       "https://nodejs.org/api/fs.html"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.026Z"
+    "lastUpdated": "2026-06-28T22:38:09.394Z"
   },
   {
     "id": "grilling",
@@ -558,7 +558,7 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Socratic_method"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.028Z"
+    "lastUpdated": "2026-06-28T22:38:09.396Z"
   },
   {
     "id": "hallucination",
@@ -580,7 +580,7 @@
       "https://arxiv.org/abs/2311.05232",
       "https://en.wikipedia.org/wiki/Hallucination_(artificial_intelligence)"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.028Z"
+    "lastUpdated": "2026-06-28T22:38:09.398Z"
   },
   {
     "id": "handoff-artifact",
@@ -602,7 +602,7 @@
       "https://en.wikipedia.org/wiki/Artifact_(software_development)",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.030Z"
+    "lastUpdated": "2026-06-28T22:38:09.400Z"
   },
   {
     "id": "handoff",
@@ -624,7 +624,7 @@
       "https://en.wikipedia.org/wiki/Context_switching",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.031Z"
+    "lastUpdated": "2026-06-28T22:38:09.401Z"
   },
   {
     "id": "harness",
@@ -646,7 +646,7 @@
       "https://en.wikipedia.org/wiki/Harness_(programming)",
       "https://modelcontextprotocol.io"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.032Z"
+    "lastUpdated": "2026-06-28T22:38:09.403Z"
   },
   {
     "id": "human-in-the-loop",
@@ -668,7 +668,7 @@
       "https://en.wikipedia.org/wiki/Human-in-the-loop",
       "https://modelcontextprotocol.io"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.033Z"
+    "lastUpdated": "2026-06-28T22:38:09.404Z"
   },
   {
     "id": "human-review",
@@ -690,7 +690,7 @@
       "https://en.wikipedia.org/wiki/Code_review",
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.034Z"
+    "lastUpdated": "2026-06-28T22:38:09.405Z"
   },
   {
     "id": "inference",
@@ -712,7 +712,7 @@
       "https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html",
       "https://en.wikipedia.org/wiki/Inference"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.034Z"
+    "lastUpdated": "2026-06-28T22:38:09.406Z"
   },
   {
     "id": "input-tokens",
@@ -734,7 +734,7 @@
       "https://docs.anthropic.com/en/api/pricing",
       "https://openai.com/api/pricing/"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.035Z"
+    "lastUpdated": "2026-06-28T22:38:09.407Z"
   },
   {
     "id": "knowledge-cutoff",
@@ -755,7 +755,7 @@
       "https://docs.anthropic.com/en/docs/about-claude/models",
       "https://platform.openai.com/docs/models"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.036Z"
+    "lastUpdated": "2026-06-28T22:38:09.408Z"
   },
   {
     "id": "mcp-tooling",
@@ -774,7 +774,7 @@
       "https://modelcontextprotocol.io",
       "https://github.com/modelcontextprotocol"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.037Z"
+    "lastUpdated": "2026-06-28T22:38:09.409Z"
   },
   {
     "id": "memory-system",
@@ -796,7 +796,7 @@
       "https://en.wikipedia.org/wiki/Dynamic_memory_allocation",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.037Z"
+    "lastUpdated": "2026-06-28T22:38:09.411Z"
   },
   {
     "id": "model-provider-request",
@@ -818,7 +818,7 @@
       "https://docs.anthropic.com/en/api/messages",
       "https://platform.openai.com/docs/api-reference/chat"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.039Z"
+    "lastUpdated": "2026-06-28T22:38:09.412Z"
   },
   {
     "id": "model-provider",
@@ -840,7 +840,7 @@
       "https://docs.anthropic.com/en/api/getting-started",
       "https://github.com/ollama/ollama"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.040Z"
+    "lastUpdated": "2026-06-28T22:38:09.413Z"
   },
   {
     "id": "model",
@@ -862,7 +862,7 @@
       "https://arxiv.org/abs/1706.03762",
       "https://karpathy.ai/"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.041Z"
+    "lastUpdated": "2026-06-28T22:38:09.415Z"
   },
   {
     "id": "next-token-prediction",
@@ -884,7 +884,7 @@
       "https://arxiv.org/abs/2001.08361",
       "https://en.wikipedia.org/wiki/Autoregressive_model"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.041Z"
+    "lastUpdated": "2026-06-28T22:38:09.416Z"
   },
   {
     "id": "non-determinism",
@@ -906,7 +906,7 @@
       "https://arxiv.org/abs/1904.09751",
       "https://pytorch.org/docs/stable/notes/randomness.html"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.042Z"
+    "lastUpdated": "2026-06-28T22:38:09.417Z"
   },
   {
     "id": "output-tokens",
@@ -928,7 +928,7 @@
       "https://docs.anthropic.com/en/api/pricing",
       "https://platform.openai.com/docs/guides/latency"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.043Z"
+    "lastUpdated": "2026-06-28T22:38:09.418Z"
   },
   {
     "id": "parameters",
@@ -950,7 +950,7 @@
       "https://arxiv.org/abs/2005.14165",
       "https://en.wikipedia.org/wiki/Parameter_(computer_programming)"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.043Z"
+    "lastUpdated": "2026-06-28T22:38:09.418Z"
   },
   {
     "id": "parametric-knowledge",
@@ -972,7 +972,7 @@
       "https://arxiv.org/abs/2005.14165",
       "https://en.wikipedia.org/wiki/Parameter_(computer_programming)"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.044Z"
+    "lastUpdated": "2026-06-28T22:38:09.419Z"
   },
   {
     "id": "permission-mode",
@@ -994,7 +994,7 @@
       "https://modelcontextprotocol.io",
       "https://en.wikipedia.org/wiki/Access_control"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.044Z"
+    "lastUpdated": "2026-06-28T22:38:09.419Z"
   },
   {
     "id": "permission-request",
@@ -1016,7 +1016,7 @@
       "https://en.wikipedia.org/wiki/User_Confirmation_Pattern",
       "https://modelcontextprotocol.io"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.044Z"
+    "lastUpdated": "2026-06-28T22:38:09.420Z"
   },
   {
     "id": "plugins",
@@ -1033,7 +1033,7 @@
     "section": "Section 3 — Agent Tooling",
     "readTimeMinutes": 3,
     "sourceRepo": "manual",
-    "lastUpdated": "2026-06-28T22:30:44.044Z"
+    "lastUpdated": "2026-06-28T22:38:09.420Z"
   },
   {
     "id": "prefix-cache",
@@ -1055,7 +1055,7 @@
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching",
       "https://platform.openai.com/docs/guides/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.045Z"
+    "lastUpdated": "2026-06-28T22:38:09.421Z"
   },
   {
     "id": "primary-source",
@@ -1077,7 +1077,7 @@
       "https://en.wikipedia.org/wiki/Primary_source",
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.045Z"
+    "lastUpdated": "2026-06-28T22:38:09.421Z"
   },
   {
     "id": "progressive-disclosure",
@@ -1099,7 +1099,7 @@
       "https://en.wikipedia.org/wiki/Progressive_disclosure",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.046Z"
+    "lastUpdated": "2026-06-28T22:38:09.422Z"
   },
   {
     "id": "prototyping",
@@ -1121,7 +1121,7 @@
       "https://en.wikipedia.org/wiki/Software_prototyping",
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.047Z"
+    "lastUpdated": "2026-06-28T22:38:09.424Z"
   },
   {
     "id": "rag",
@@ -1141,7 +1141,7 @@
       "https://arxiv.org/abs/2005.11401",
       "https://js.langchain.com/v0.2/docs/tutorials/rag/"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.048Z"
+    "lastUpdated": "2026-06-28T22:38:09.425Z"
   },
   {
     "id": "sandbox",
@@ -1163,7 +1163,7 @@
       "https://en.wikipedia.org/wiki/Sandbox_(computer_security)",
       "https://github.com/docker/docker-ce"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.048Z"
+    "lastUpdated": "2026-06-28T22:38:09.425Z"
   },
   {
     "id": "secondary-source",
@@ -1185,7 +1185,7 @@
       "https://en.wikipedia.org/wiki/Secondary_source",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.048Z"
+    "lastUpdated": "2026-06-28T22:38:09.426Z"
   },
   {
     "id": "session",
@@ -1207,7 +1207,7 @@
       "https://en.wikipedia.org/wiki/Session_(computer_science)",
       "https://docs.anthropic.com/en/docs/about-claude/models"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.049Z"
+    "lastUpdated": "2026-06-28T22:38:09.427Z"
   },
   {
     "id": "skill",
@@ -1229,7 +1229,7 @@
       "https://agentskills.io",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.049Z"
+    "lastUpdated": "2026-06-28T22:38:09.428Z"
   },
   {
     "id": "smart-zone",
@@ -1251,7 +1251,7 @@
       "https://arxiv.org/abs/2307.03172",
       "https://arxiv.org/abs/2311.05232"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.049Z"
+    "lastUpdated": "2026-06-28T22:38:09.429Z"
   },
   {
     "id": "spec",
@@ -1273,7 +1273,7 @@
       "https://en.wikipedia.org/wiki/Specification_(technical_standard)",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.049Z"
+    "lastUpdated": "2026-06-28T22:38:09.431Z"
   },
   {
     "id": "stateful",
@@ -1295,7 +1295,7 @@
       "https://en.wikipedia.org/wiki/Stateful_protocol",
       "https://docs.anthropic.com/en/api/messages"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.050Z"
+    "lastUpdated": "2026-06-28T22:38:09.431Z"
   },
   {
     "id": "stateless",
@@ -1317,7 +1317,7 @@
       "https://en.wikipedia.org/wiki/Stateless_protocol",
       "https://docs.anthropic.com/en/api/messages"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.050Z"
+    "lastUpdated": "2026-06-28T22:38:09.432Z"
   },
   {
     "id": "subagent",
@@ -1339,7 +1339,7 @@
       "https://arxiv.org/abs/2306.02241",
       "https://github.com/langchain-ai/langgraph"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.050Z"
+    "lastUpdated": "2026-06-28T22:38:09.433Z"
   },
   {
     "id": "sycophancy",
@@ -1359,7 +1359,7 @@
       "https://arxiv.org/abs/2310.13548",
       "https://arxiv.org/abs/2212.09251"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.050Z"
+    "lastUpdated": "2026-06-28T22:38:09.433Z"
   },
   {
     "id": "system-prompt",
@@ -1381,7 +1381,7 @@
       "https://docs.anthropic.com/en/docs/build-with-claude/system-prompts",
       "https://platform.openai.com/docs/guides/reasoning"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.050Z"
+    "lastUpdated": "2026-06-28T22:38:09.434Z"
   },
   {
     "id": "ticket",
@@ -1403,7 +1403,7 @@
       "https://en.wikipedia.org/wiki/Issue_tracking_system",
       "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.051Z"
+    "lastUpdated": "2026-06-28T22:38:09.434Z"
   },
   {
     "id": "token",
@@ -1425,7 +1425,7 @@
       "https://github.com/openai/tiktoken",
       "https://huggingface.co/docs/transformers/main_classes/tokenizer"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.052Z"
+    "lastUpdated": "2026-06-28T22:38:09.435Z"
   },
   {
     "id": "tool-call",
@@ -1447,7 +1447,7 @@
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
       "https://platform.openai.com/docs/guides/function-calling"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.052Z"
+    "lastUpdated": "2026-06-28T22:38:09.435Z"
   },
   {
     "id": "tool-result",
@@ -1469,7 +1469,7 @@
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
       "https://platform.openai.com/docs/guides/function-calling"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.052Z"
+    "lastUpdated": "2026-06-28T22:38:09.435Z"
   },
   {
     "id": "tool",
@@ -1491,7 +1491,7 @@
       "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
       "https://platform.openai.com/docs/guides/function-calling"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.052Z"
+    "lastUpdated": "2026-06-28T22:38:09.436Z"
   },
   {
     "id": "training",
@@ -1513,7 +1513,7 @@
       "https://pytorch.org/tutorials/beginner/blitz/tensor_tutorial.html",
       "https://arxiv.org/abs/2210.02414"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.053Z"
+    "lastUpdated": "2026-06-28T22:38:09.436Z"
   },
   {
     "id": "turn",
@@ -1535,7 +1535,7 @@
       "https://en.wikipedia.org/wiki/Conversation_analysis",
       "https://docs.anthropic.com/en/docs/build-with-claude/system-prompts"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.053Z"
+    "lastUpdated": "2026-06-28T22:38:09.436Z"
   },
   {
     "id": "vector-databases",
@@ -1555,7 +1555,7 @@
       "https://github.com/pgvector/pgvector",
       "https://github.com/qdrant/qdrant"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.053Z"
+    "lastUpdated": "2026-06-28T22:38:09.437Z"
   },
   {
     "id": "vibe-coding",
@@ -1575,6 +1575,6 @@
     "sources": [
       "https://x.com/karpathy/status/1886192184808149383"
     ],
-    "lastUpdated": "2026-06-28T22:30:44.053Z"
+    "lastUpdated": "2026-06-28T22:38:09.437Z"
   }
 ]
