@@ -10,7 +10,17 @@ const { activeTab } = Astro.props;
   <div class="container-site flex h-16 items-center justify-between">
     <!-- Logo -->
     <a href="/" class="flex items-center hover:opacity-80 transition-opacity duration-fast" aria-label="Clie-AI-LRN Home">
-      <img src="/logo.jpg" alt="CAIL Logo" class="h-8 w-8 rounded border border-subtle" style="image-rendering: pixelated;" />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-8 h-8 text-primary transition-colors duration-normal" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Outer C and L combined path (Accent color) -->
+        <path d="M 25 8 H 8 V 24 H 25" class="text-accent" />
+        <!-- Inner A -->
+        <path d="M 11 20 L 15 12 L 19 20" />
+        <path d="M 13 17 H 17" />
+        <!-- Inner I -->
+        <path d="M 22 12 V 20" />
+        <path d="M 20.5 12 H 23.5" />
+        <path d="M 20.5 20 H 23.5" />
+      </svg>
     </a>
 
     <!-- Desktop Navigation -->
