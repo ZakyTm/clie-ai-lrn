@@ -25,6 +25,78 @@ const usageHtml = term.usage ? marked.parse(term.usage) : '';
 const relatedTerms = term.related
   .map((id: string) => terms.find((t: any) => t.id === id))
   .filter(Boolean);
+
+// Shuffle utility
+function shuffle(array: any[]) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Dynamic quiz generation
+const otherTerms = terms.filter((t: any) => t.id !== term.id);
+const getRandomTerms = (count: number) => {
+  const shuffled = [...otherTerms].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+};
+
+const distractors = getRandomTerms(3);
+
+const q1Choices = [
+  { text: term.summary, isCorrect: true },
+  { text: distractors[0]?.summary || "A compiler script that checks configuration file formats.", isCorrect: false },
+  { text: distractors[1]?.summary || "An environment isolation container for server databases.", isCorrect: false },
+  { text: distractors[2]?.summary || "A hardware-level memory controller for execution logic.", isCorrect: false }
+];
+
+let correctQ2 = "To improve model grounding, optimize context footprint, and run stateful automation loops.";
+if (term.section.toLowerCase().includes('model')) {
+  correctQ2 = "To run prediction operations that calculate probability distributions for the next token.";
+} else if (term.id === 'rag' || term.id === 'vector-databases') {
+  correctQ2 = "To retrieve relevant document chunks from index storage and inject them into the context prompt.";
+} else if (term.id === 'agent' || term.id === 'subagent' || term.id === 'plugin' || term.id === 'mcp-tooling' || term.id === 'tool') {
+  correctQ2 = "To run autonomous cycles or connect tools that execute tasks statefully under goal constraints.";
+}
+
+const q2Choices = [
+  { text: correctQ2, isCorrect: true },
+  { text: "To hardcode prompt instruction patterns directly inside the base LLM weights.", isCorrect: false },
+  { text: "To replace all client-side logic with deep neural network training loops.", isCorrect: false },
+  { text: "To encrypt vector indexes so they cannot be accessed by external model providers.", isCorrect: false }
+];
+
+let correctQ3 = "Failing to budget token counts and over-complicating system dependencies.";
+if (term.avoid) {
+  correctQ3 = term.avoid.split('* ').join('').split('`').join('').split('\n')[0].replace(/^Avoid:\s*/i, '').replace(/^Do not\s*/i, 'Failing to avoid: ').trim();
+  if (correctQ3.length > 150) {
+    correctQ3 = correctQ3.slice(0, 147) + '...';
+  }
+}
+
+const q3Choices = [
+  { text: correctQ3, isCorrect: true },
+  { text: "Relying on standard open-source licenses to guarantee project transparency.", isCorrect: false },
+  { text: "Running clean local compilation build runs before updating production code.", isCorrect: false },
+  { text: "Documenting the current project state inside a standardized markdown log file.", isCorrect: false }
+];
+
+const quizQuestions = [
+  {
+    question: `Which of the following best defines the concept of "${term.title}"?`,
+    choices: shuffle(q1Choices)
+  },
+  {
+    question: `In an AI engineering architecture, what is a key implementation objective of "${term.title}"?`,
+    choices: shuffle(q2Choices)
+  },
+  {
+    question: `Which of the following describes a critical pitfall or design check associated with "${term.title}"?`,
+    choices: shuffle(q3Choices)
+  }
+];
 ---
 
 <Base title={`${term.title} — AI Manual`} description={term.summary}>
@@ -56,8 +128,9 @@ const relatedTerms = term.related
       )}
 
       <!-- Term Title -->
-      <h1 class="font-serif text-4xl md:text-5xl font-bold mb-6 text-primary">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold mb-6 text-primary flex items-center gap-3">
         {term.title}
+        <span id="mastery-star" class="hidden text-2xl text-green-500 animate-pulse" title="Concept Mastered">★</span>
       </h1>
 
       <!-- Synopsis/Summary -->
@@ -116,6 +189,70 @@ const relatedTerms = term.related
           </div>
         </section>
       )}
+      <!-- Interactive Quiz Section -->
+      <div class="border-t border-dashed border-subtle/50 pt-12 mt-12">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <p class="font-mono text-xs uppercase tracking-widest text-accent mb-1">// SOCRATIC_VALIDATION</p>
+            <h2 class="font-serif text-2xl font-bold">Interactive Concept Quiz</h2>
+          </div>
+          <div id="quiz-badge" class="hidden font-mono text-[9px] text-green-500 border border-green-500 bg-green-500/5 px-2 py-0.5 rounded uppercase font-bold">
+            [★★★ MASTERED]
+          </div>
+        </div>
+
+        <script define:vars={{ quizQuestions, termId: term.id }}>
+          window.quizData = { questions: quizQuestions, termId: termId };
+        </script>
+
+        <div id="quiz-container" class="figure-frame p-6 bg-surface/30 relative">
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+
+          <!-- Quiz Step -->
+          <div id="quiz-step-container">
+            <div class="flex justify-between items-center mb-4 font-mono text-[10px] text-muted">
+              <span>QUESTION <span id="current-question-num">1</span> OF 3</span>
+              <span id="quiz-score">SCORE: 0/3</span>
+            </div>
+
+            <h3 id="quiz-question-text" class="text-sm md:text-base font-serif font-bold text-primary mb-6 leading-relaxed">
+              <!-- Question will be injected here -->
+            </h3>
+
+            <div id="quiz-choices" class="space-y-3">
+              <!-- Choices will be injected here -->
+            </div>
+
+            <div class="mt-6 flex justify-between items-center min-h-[40px]">
+              <div id="quiz-feedback" class="font-mono text-xs font-bold uppercase transition-all"></div>
+              <button 
+                id="quiz-next-btn" 
+                class="hidden px-4 py-2 border border-accent bg-accent-muted text-accent hover:bg-accent/25 rounded transition-all font-mono text-xs uppercase font-bold cursor-pointer"
+              >
+                [NEXT_QUESTION ↵]
+              </button>
+            </div>
+          </div>
+
+          <!-- Quiz Completed State -->
+          <div id="quiz-completed-container" class="hidden text-center py-6">
+            <div class="inline-block text-4xl mb-4 animate-bounce">🏆</div>
+            <h3 class="font-serif text-xl font-bold text-primary mb-2">Concept Mastered!</h3>
+            <p class="text-secondary text-xs font-serif max-w-sm mx-auto mb-6">
+              You have successfully completed all Socratic validation questions for this term.
+            </p>
+            <button 
+              id="quiz-restart-btn" 
+              class="px-4 py-2 border border-subtle hover:border-accent hover:text-accent rounded transition-all font-mono text-xs uppercase cursor-pointer"
+            >
+              [RETAKE_QUIZ]
+            </button>
+          </div>
+        </div>
+      </div>
 
       <!-- Contribution & Quiz Prompter Banner -->
       <div class="border-t border-dashed border-subtle/50 pt-8 mt-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-mono">
@@ -144,6 +281,7 @@ const relatedTerms = term.related
 </Base>
 
 <script>
+  // 1. Copy Prompt Clipboard Logic
   const copyBtn = document.getElementById('copy-quiz-prompt');
   if (copyBtn) {
     const termTitle = copyBtn.getAttribute('data-term-title');
@@ -182,5 +320,122 @@ const relatedTerms = term.related
         console.error('Failed to copy text', err);
       });
     });
+  }
+
+  // 2. Interactive Socratic Quiz Controller
+  const quizData = window.quizData;
+  if (quizData) {
+    const termId = quizData.termId;
+    const questions = quizData.questions;
+    
+    const stepContainer = document.getElementById('quiz-step-container');
+    const completedContainer = document.getElementById('quiz-completed-container');
+    const questionText = document.getElementById('quiz-question-text');
+    const choicesContainer = document.getElementById('quiz-choices');
+    const feedbackText = document.getElementById('quiz-feedback');
+    const nextBtn = document.getElementById('quiz-next-btn');
+    const restartBtn = document.getElementById('quiz-restart-btn');
+    const currentQuestionNum = document.getElementById('current-question-num');
+    const quizScore = document.getElementById('quiz-score');
+    
+    const quizBadge = document.getElementById('quiz-badge');
+    const masteryStar = document.getElementById('mastery-star');
+    
+    let currentIndex = 0;
+    let score = 0;
+    let answeredCorrectly = false;
+    
+    // Check initial mastery state
+    if (localStorage.getItem(`term-mastered-${termId}`) === 'true') {
+      if (quizBadge) quizBadge.classList.remove('hidden');
+      if (masteryStar) masteryStar.classList.remove('hidden');
+    }
+    
+    function loadQuestion() {
+      if (currentIndex >= questions.length) {
+        showCompleted();
+        return;
+      }
+      
+      answeredCorrectly = false;
+      if (currentQuestionNum) currentQuestionNum.innerText = (currentIndex + 1).toString();
+      if (quizScore) quizScore.innerText = `SCORE: ${score}/${questions.length}`;
+      if (nextBtn) nextBtn.classList.add('hidden');
+      if (feedbackText) {
+        feedbackText.innerText = '';
+        feedbackText.className = 'font-mono text-xs font-bold uppercase transition-all';
+      }
+      
+      const q = questions[currentIndex];
+      if (questionText) questionText.innerText = q.question;
+      
+      if (choicesContainer) {
+        choicesContainer.innerHTML = '';
+        q.choices.forEach((choice: any, index: number) => {
+          const btn = document.createElement('button');
+          btn.className = "w-full text-left p-4 border border-subtle hover:border-accent hover:bg-surface/20 rounded font-serif text-sm transition-all duration-fast cursor-pointer flex justify-between items-center group relative";
+          btn.innerHTML = `<span>${choice.text}</span><span class="font-mono text-[10px] text-muted group-hover:text-accent select-indicator">[SELECT]</span>`;
+          
+          btn.addEventListener('click', () => {
+            if (answeredCorrectly) return; // Locked once correct
+            const indicator = btn.querySelector('.select-indicator');
+            if (choice.isCorrect) {
+              answeredCorrectly = true;
+              score++;
+              if (quizScore) quizScore.innerText = `SCORE: ${score}/${questions.length}`;
+              
+              btn.className = "w-full text-left p-4 border border-green-500 bg-green-500/10 text-green-400 rounded font-serif text-sm transition-all duration-fast flex justify-between items-center relative";
+              if (indicator) indicator.innerHTML = '[CORRECT! ✓]';
+              
+              if (feedbackText) {
+                feedbackText.innerText = 'CORRECT! ✓';
+                feedbackText.className = 'font-mono text-xs font-bold uppercase text-green-500 transition-all';
+              }
+              if (nextBtn) nextBtn.classList.remove('hidden');
+            } else {
+              btn.className = "w-full text-left p-4 border border-red-500 bg-red-500/10 text-red-400 rounded font-serif text-sm transition-all duration-fast flex justify-between items-center relative";
+              if (indicator) indicator.innerHTML = '[INCORRECT ✗]';
+              
+              if (feedbackText) {
+                feedbackText.innerText = 'INCORRECT. TRY AGAIN.';
+                feedbackText.className = 'font-mono text-xs font-bold uppercase text-red-500 transition-all';
+              }
+            }
+          });
+          
+          choicesContainer.appendChild(btn);
+        });
+      }
+    }
+    
+    function showCompleted() {
+      if (stepContainer) stepContainer.classList.add('hidden');
+      if (completedContainer) completedContainer.classList.remove('hidden');
+      
+      // Save mastery progress
+      localStorage.setItem(`term-mastered-${termId}`, 'true');
+      if (quizBadge) quizBadge.classList.remove('hidden');
+      if (masteryStar) masteryStar.classList.remove('hidden');
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        currentIndex++;
+        loadQuestion();
+      });
+    }
+    
+    if (restartBtn) {
+      restartBtn.addEventListener('click', () => {
+        currentIndex = 0;
+        score = 0;
+        if (stepContainer) stepContainer.classList.remove('hidden');
+        if (completedContainer) completedContainer.classList.add('hidden');
+        loadQuestion();
+      });
+    }
+    
+    // Initialize first question
+    loadQuestion();
   }
 </script>
