@@ -1,0 +1,192 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Breadcrumb from '../../components/layout/Breadcrumb.astro';
+import curriculum from '../../data/curriculum.json';
+import resources from '../../data/resources.json';
+import { Marked } from 'marked';
+
+export async function getStaticPaths() {
+  const paths: any[] = [];
+  curriculum.forEach((phase: any) => {
+    phase.lessons.forEach((lesson: any) => {
+      paths.push({
+        params: { slug: lesson.id },
+        props: { lesson, phase }
+      });
+    });
+  });
+  return paths;
+}
+
+const { lesson, phase } = Astro.props;
+const marked = new Marked();
+
+// Compile lesson markdown to HTML
+const bodyHtml = marked.parse(lesson.body || '');
+
+// Fetch related external resources
+const lessonResources = lesson.resources
+  .map((resId: string) => resources.find((r: any) => r.id === resId))
+  .filter(Boolean);
+---
+
+<Base title={`${lesson.title} — AI Curriculum`} description={lesson.summary}>
+  <Header activeTab="curriculum" />
+
+  <main class="flex-grow container-site py-8">
+    <Breadcrumb 
+      items={[
+        { label: 'CURRICULUM', href: '/curriculum' },
+        { label: phase.title.toUpperCase(), href: `/curriculum#${phase.id}` },
+        { label: lesson.title.toUpperCase(), href: `/curriculum/${lesson.id}` }
+      ]} 
+    />
+
+    <article class="max-w-3xl mt-8">
+      <!-- Metadata -->
+      <div class="flex flex-wrap items-center gap-3 font-mono text-[10px] text-accent mb-2">
+        <span>// PHASE {phase.id.split('-')[0]}</span>
+        <span class="text-subtle">•</span>
+        <span class="uppercase">DIFFICULTY: {lesson.difficulty}</span>
+        <span class="text-subtle">•</span>
+        <span>{lesson.readTimeMinutes} MINUTE LESSON</span>
+      </div>
+
+      <!-- Main Lesson Title -->
+      <h1 class="font-serif text-3xl md:text-5xl font-bold mb-6 text-primary">
+        {lesson.title}
+      </h1>
+
+      <!-- Progress checkbox top banner -->
+      <div class="mb-8 p-4 border border-subtle/50 bg-surface/20 rounded flex items-center justify-between gap-4">
+        <div class="font-mono text-xs text-primary flex items-center gap-2.5">
+          <input 
+            type="checkbox" 
+            id="lesson-status-cb"
+            class="cursor-pointer w-4 h-4 text-accent focus:ring-accent border-subtle rounded bg-canvas"
+            data-lesson-id={lesson.id}
+          />
+          <label for="lesson-status-cb" class="cursor-pointer font-bold">Mark this lesson as completed</label>
+        </div>
+        <a href="/curriculum" class="font-mono text-[10px] text-secondary hover:underline">← back to roadmap</a>
+      </div>
+
+      <!-- Lesson Body -->
+      <section class="prose prose-custom font-serif text-base md:text-lg text-primary leading-relaxed mb-12">
+        <Fragment set:html={bodyHtml} />
+      </section>
+
+      <!-- External Resources Section -->
+      {lessonResources.length > 0 && (
+        <section class="border-t border-subtle/50 pt-8 mt-12">
+          <h2 class="font-mono text-xs uppercase tracking-widest text-muted mb-4">// EXTERNAL_RESOURCES</h2>
+          <div class="space-y-3 max-w-2xl">
+            {lessonResources.map((res: any) => (
+              <a 
+                href={res.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="figure-frame p-4 hover:border-accent hover:bg-surface/20 transition-all duration-fast flex justify-between items-center group"
+              >
+                <div class="figure-corner figure-corner--tl"></div>
+                <div class="figure-corner figure-corner--tr"></div>
+                <div class="figure-corner figure-corner--bl"></div>
+                <div class="figure-corner figure-corner--br"></div>
+                
+                <div>
+                  <span class="font-mono text-[9px] text-accent uppercase tracking-wider block mb-1">
+                    [{res.type}]
+                  </span>
+                  <span class="text-xs font-bold text-primary group-hover:underline block">
+                    {res.title}
+                  </span>
+                </div>
+                <span class="font-mono text-[10px] text-muted ml-4 whitespace-nowrap">
+                  open link ↗
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Contribution & Quiz Prompter Banner -->
+      <div class="border-t border-dashed border-subtle/50 pt-8 mt-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-mono">
+        <div class="flex flex-wrap gap-3">
+          <button 
+            id="copy-lesson-quiz-prompt" 
+            class="px-3.5 py-1.5 border border-accent bg-accent-muted text-accent hover:bg-accent/25 rounded transition-all font-bold uppercase flex items-center gap-1.5 cursor-pointer"
+            data-lesson-title={lesson.title}
+          >
+            <span>[QUIZ_ME_PROMPT 📋]</span>
+          </button>
+        </div>
+        <a 
+          href={`https://github.com/rohitg00/ai-engineering-from-scratch/edit/main/${lesson.filePath}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-3.5 py-1.5 border border-subtle hover:border-accent hover:text-accent rounded transition-all uppercase text-secondary"
+        >
+          [EDIT_THIS_LESSON_ON_GITHUB ↗]
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  // Sync checkbox status
+  const cb = document.getElementById('lesson-status-cb') as HTMLInputElement;
+  if (cb) {
+    const lessonId = cb.dataset.lessonId;
+    cb.checked = localStorage.getItem(`curriculum-completed-${lessonId}`) === 'true';
+    cb.addEventListener('change', () => {
+      localStorage.setItem(`curriculum-completed-${lessonId}`, cb.checked ? 'true' : 'false');
+    });
+  }
+
+  // Copy lesson quiz prompt
+  const copyBtn = document.getElementById('copy-lesson-quiz-prompt');
+  if (copyBtn) {
+    const lessonTitle = copyBtn.getAttribute('data-lesson-title');
+    const promptText = `Act as an expert Socratic AI Engineering Tutor. Quiz me on the curriculum lesson topic "${lessonTitle}". Ask me exactly 3 questions: one conceptual, one code architecture scenario, and one troubleshooting/debugging question. Ask me the questions one at a time, wait for my response to each, grade my answers strictly, and explain any gaps in my understanding before moving to the next question.`;
+    
+    copyBtn.addEventListener('click', () => {
+      const copyText = (text: string) => {
+        if (navigator.clipboard && window.isSecureContext) {
+          return navigator.clipboard.writeText(text);
+        } else {
+          const textArea = document.createElement('textarea');
+          textArea.value = text;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-9999px';
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand('copy');
+          } catch (err) {
+            console.error('Fallback copy failed', err);
+          }
+          document.body.removeChild(textArea);
+          return Promise.resolve();
+        }
+      };
+
+      copyText(promptText).then(() => {
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<span>[COPIED_TO_CLIPBOARD! ✓]</span>';
+        copyBtn.classList.add('border-green-500', 'text-green-500');
+        setTimeout(() => {
+          copyBtn.innerHTML = originalText;
+          copyBtn.classList.remove('border-green-500', 'text-green-500');
+        }, 2000);
+      }).catch((err) => {
+        console.error('Failed to copy text', err);
+      });
+    });
+  }
+</script>

@@ -11,14 +11,20 @@ sync_repo() {
   local target="$CONTENT_DIR/$name"
   echo "→ Syncing $name..."
   if [ ! -d "$target/.git" ]; then
-    git clone --depth=1 --filter=blob:none --sparse "$url" "$target"
-    cd "$target"
-    git sparse-checkout set "${sparse_dirs[@]}"
-    cd - > /dev/null
+    if [ "${sparse_dirs[0]}" = "." ]; then
+      git clone --depth=1 "$url" "$target"
+    else
+      git clone --depth=1 --filter=blob:none --sparse "$url" "$target"
+      cd "$target"
+      git sparse-checkout set "${sparse_dirs[@]}"
+      cd - > /dev/null
+    fi
   else
     cd "$target"
     git pull --depth=1
-    git sparse-checkout set "${sparse_dirs[@]}"
+    if [ "${sparse_dirs[0]}" != "." ]; then
+      git sparse-checkout set "${sparse_dirs[@]}"
+    fi
     cd - > /dev/null
   fi
   local commit_hash

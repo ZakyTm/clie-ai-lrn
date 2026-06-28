@@ -2,180 +2,375 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
-import ConceptCard from '../components/concept/ConceptCard.astro';
-
-import domains from '../data/domains.json';
 import buildMeta from '../data/build-meta.json';
-import concepts from '../data/concepts.json';
+import terms from '../data/terms.json';
 
-// Fetch featured concepts (specifically our manual ones)
-const featuredConcepts = concepts
-  .filter((c: any) => c.featured)
-  .slice(0, 5);
+// Group terms by sections for navigation
+const uniqueSections = [...new Set(terms.map((t: any) => t.section))];
+const sections = uniqueSections.map((sect, index) => {
+  const sectTerms = terms.filter((t: any) => t.section === sect);
+  return {
+    id: `section-${index + 1}`,
+    num: index + 1,
+    title: sect,
+    termsCount: sectTerms.length
+  };
+});
 
-// Fetch recent concepts (from rohitg00 repository)
-const recentConcepts = concepts
-  .filter((c: any) => !c.featured && c.sourceRepo !== 'manual')
-  .slice(0, 3);
+// Autocomplete index for the REPL search (safe subset sent to client script)
+const replIndex = terms.map((t: any) => ({
+  id: t.id,
+  title: t.title,
+  summary: t.summary
+}));
+
+// Highlighted manual terms to start reading
+const featuredTerms = ['rag', 'agents', 'mcp-tooling', 'embeddings', 'vector-databases']
+  .map(id => terms.find((t: any) => t.id === id))
+  .filter(Boolean);
 ---
 
-<Base title="AI Engineering Knowledge Hub — The Manual" description="Structured, search-ready developer knowledge for building AI systems. Ingested from top open source sources.">
+<Base title="AI Engineering Knowledge Hub" description="Look up AI coding terms in plain English, and follow the curriculum roadmap to build AI systems.">
   <Header activeTab="home" />
 
-  <main class="flex-grow">
-    <!-- Hero Section -->
-    <section class="border-b border-subtle py-12 md:py-20 bg-surface/30">
-      <div class="container-site">
-        <div class="figure-frame p-6 md:p-8 bg-deep border-accent/40 max-w-4xl mx-auto">
-          <div class="figure-corner figure-corner--tl"></div>
-          <div class="figure-corner figure-corner--tr"></div>
-          <div class="figure-corner figure-corner--bl"></div>
-          <div class="figure-corner figure-corner--br"></div>
+  <main class="flex-grow container-site py-12">
+    <!-- Hero Block -->
+    <section class="max-w-3xl mb-12">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent mb-3">// THE_MANUAL_OF_AI_ENGINEERING</p>
+      <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight mb-4">
+        The AI Engineer's Manual
+      </h1>
+      <p class="text-secondary text-base md:text-lg font-serif leading-relaxed">
+        A structured, plain-English dictionary of AI engineering concepts, and a step-by-step curriculum roadmap. Look up emerging jargon, understand core mechanics, and learn to build AI systems from scratch.
+      </p>
+    </section>
 
-          <!-- ASCII Art Title - hidden on mobile for layout safety -->
-          <div class="hidden sm:block text-[9px] leading-[1.1] font-mono text-accent/80 select-none overflow-x-auto mb-8 whitespace-pre">
-{`   _   ___   _____ _   _  _____ _   _  _____ _____ _____ _____ _   _ _____ 
-  / | |_ _| | ____| \\ | |/ ____| | | |/ ____|_   _|  ___|  ___| \\ | |  ___|
- /  |  | |  |  _| |  \\| | |  __| | | | |      | | | |_  | |_  |  \\| | |__  
-/ / |  | |  | |___| |\\  | |__|_| |_| | |____ _| |_|  _| |  _| | |\\  | |___ 
-/_/  |_|___| |_____|_| \\_|\\_____|\\___/\\_____|_____|_|   |_|   |_| \\_|_____|`}
+    <!-- SIGNATURE: Terminal REPL Search -->
+    <section class="mb-16 max-w-2xl">
+      <div class="figure-frame bg-surface border-subtle overflow-hidden shadow-lg">
+        <div class="figure-corner figure-corner--tl"></div>
+        <div class="figure-corner figure-corner--tr"></div>
+        <div class="figure-corner figure-corner--bl"></div>
+        <div class="figure-corner figure-corner--br"></div>
+
+        <!-- Terminal Window bar -->
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-subtle bg-elevated font-mono text-[10px] text-secondary">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#e0635e]"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-accent"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-[#5fae6e]"></span>
+          <span class="ml-2">man ai — interactive search console</span>
+        </div>
+
+        <!-- Terminal Body -->
+        <div class="p-5 font-mono text-xs">
+          <label class="flex items-center gap-1.5 cursor-text">
+            <span class="text-accent">$ man ai/</span>
+            <input 
+              id="repl-search-input" 
+              class="flex-grow bg-transparent border-none outline-none text-primary caret-transparent"
+              autocomplete="off" 
+              spellcheck="false"
+              placeholder="" 
+              aria-label="Search AI terms" 
+            />
+            <span id="repl-caret" class="w-2 h-4 bg-accent inline-block animate-[blink_1.1s_steps(1)_infinite]"></span>
+          </label>
+          
+          <!-- Dropdown autocomplete list -->
+          <ul id="repl-results" class="mt-4 divide-y divide-subtle/20 list-none"></ul>
+          
+          <p id="repl-hint" class="text-muted text-[10px] mt-4">
+            ↑↓ to navigate · ↵ to open · {buildMeta.termCount} entries compiled
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dual Pillars Gateway -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-subtle/50 pt-12 mb-16">
+      
+      <!-- Pillar 1: The Dictionary (Manual) -->
+      <div class="figure-frame p-6 bg-surface/30 flex flex-col justify-between min-h-[380px] relative group hover:border-accent transition-all duration-normal">
+        <div class="figure-corner figure-corner--tl"></div>
+        <div class="figure-corner figure-corner--tr"></div>
+        <div class="figure-corner figure-corner--bl"></div>
+        <div class="figure-corner figure-corner--br"></div>
+        
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-mono text-[9px] text-accent uppercase tracking-wider">// PRODUCT_01</span>
+            <span class="font-mono text-[9px] text-muted">{buildMeta.termCount} entries compiled</span>
           </div>
-
-          <div class="sm:hidden font-mono font-bold text-xl text-accent mb-4 tracking-wider">
-            [AI_ENGINEERING_HUB]
+          <h2 class="font-serif text-2xl font-bold text-primary mb-3 group-hover:text-accent transition-colors">
+            AI Coding Dictionary
+          </h2>
+          <p class="text-secondary text-sm font-serif leading-relaxed mb-6">
+            A structured reference index explaining emerging AI terms, stateful tools, cache metrics, failure modes, and developer conventions in plain English.
+          </p>
+          
+          <!-- Mini Chapters list -->
+          <div class="space-y-1.5 font-mono text-[10px] text-muted mb-6">
+            <div class="flex items-center gap-2">
+              <span class="text-accent">§01</span> <span>The Model & Parameters</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-accent">§05</span> <span>Parametric & Contextual Memory</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-accent">§09</span> <span>Skills, Subagents & Review</span>
+            </div>
           </div>
+        </div>
+        
+        <a 
+          href="/glossary" 
+          class="block w-full text-center px-4 py-2.5 border border-accent bg-accent-muted text-accent font-mono text-[10px] uppercase font-bold rounded-md hover:bg-accent/20 transition-colors"
+        >
+          [EXPLORE_AI_DICTIONARY]
+        </a>
+      </div>
 
-          <p class="font-serif text-base md:text-lg text-primary max-w-2xl mb-8 leading-relaxed">
-            A live, compiled manual organizing scattered AI engineering patterns into clear, structured domains. Formatted like a Unix man page crossed with a physical engineering handbook.
+      <!-- Pillar 2: The Curriculum (Roadmap) -->
+      <div class="figure-frame p-6 bg-surface/40 flex flex-col justify-between min-h-[380px] relative group hover:border-accent transition-all duration-normal">
+        <div class="figure-corner figure-corner--tl"></div>
+        <div class="figure-corner figure-corner--tr"></div>
+        <div class="figure-corner figure-corner--bl"></div>
+        <div class="figure-corner figure-corner--br"></div>
+        
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-mono text-[9px] text-accent uppercase tracking-wider">// PRODUCT_02</span>
+            <span class="font-mono text-[9px] text-muted">{buildMeta.phaseCount} phases · {buildMeta.lessonCount} lessons</span>
+          </div>
+          <h2 class="font-serif text-2xl font-bold text-primary mb-3 group-hover:text-accent transition-colors">
+            Learning Curriculum
+          </h2>
+          <p class="text-secondary text-sm font-serif leading-relaxed mb-4">
+            A comprehensive, step-by-step roadmap for software engineers learning to build AI systems. Code math layers, train neural models, and build multi-agent containers from scratch.
           </p>
 
-          <!-- Prompt bar interface -->
-          <div class="flex flex-col sm:flex-row gap-3 font-mono text-xs max-w-xl">
-            <div class="flex-grow flex items-center gap-2 border border-subtle rounded-md bg-canvas/50 px-3 py-2 text-secondary">
-              <span class="text-accent">$</span>
-              <span class="text-muted">READY: search the manual...</span>
+          <!-- Client-side Progress Sync (Small version) -->
+          <div class="mt-2 p-3.5 border border-subtle/30 bg-canvas/30 rounded font-mono text-[9px] text-secondary mb-6">
+            <div class="flex justify-between items-center mb-1.5">
+              <span>COMPLETION PROGRESS</span>
+              <span id="home-progress-percent">0%</span>
             </div>
-            <a 
-              href="/search" 
-              class="flex-shrink-0 text-center px-4 py-2 border border-accent bg-accent-muted text-accent font-bold rounded-md hover:bg-accent/20 hover:text-accent-hover transition-colors"
-            >
-              QUERY_DB()
-            </a>
+            <div class="w-full bg-canvas border border-subtle/20 h-1.5 rounded-full overflow-hidden">
+              <div id="home-progress-fill" class="bg-accent h-full transition-all duration-500" style="width: 0%"></div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Stats Bar -->
-    <section class="border-b border-subtle py-4 bg-surface/10 font-mono text-xs">
-      <div class="container-site flex flex-wrap justify-around gap-4 text-center">
-        <div>
-          <span class="text-muted">DOMAINS:</span> <span class="text-primary font-bold">[{buildMeta.domainCount}]</span>
-        </div>
-        <div class="border-l border-subtle/50 h-4 hidden sm:block"></div>
-        <div>
-          <span class="text-muted">CONCEPTS:</span> <span class="text-primary font-bold">[{buildMeta.conceptCount}]</span>
-        </div>
-        <div class="border-l border-subtle/50 h-4 hidden sm:block"></div>
-        <div>
-          <span class="text-muted">RESOURCES:</span> <span class="text-primary font-bold">[{buildMeta.resourceCount}]</span>
-        </div>
-        <div class="border-l border-subtle/50 h-4 hidden sm:block"></div>
-        <div class="hidden md:block">
-          <span class="text-muted">STATUS:</span> <span class="text-[var(--success)] font-bold">[SYNCED]</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Domains Directory -->
-    <section class="py-16 border-b border-subtle">
-      <div class="container-site">
-        <h2 class="font-mono text-xs uppercase tracking-widest text-muted mb-8">// DIRECTORY_DOMAINS</h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {domains.map(domain => (
-            <a 
-              href={`/domains/${domain.id}`} 
-              class="figure-frame group p-6 hover:border-accent hover:shadow-sm transition-all duration-fast"
-            >
-              <div class="figure-corner figure-corner--tl"></div>
-              <div class="figure-corner figure-corner--tr"></div>
-              <div class="figure-corner figure-corner--bl"></div>
-              <div class="figure-corner figure-corner--br"></div>
-              
-              <div class="flex justify-between items-start gap-4">
-                <div>
-                  <div class="font-mono text-[9px] tracking-wider uppercase text-muted mb-2">
-                    SECTION_0{domain.order}
-                  </div>
-                  <h3 class="text-lg font-serif font-bold group-hover:text-accent transition-colors mb-2">
-                    {domain.title}
-                  </h3>
-                  <p class="text-secondary text-sm font-serif line-clamp-3">
-                    {domain.description}
-                  </p>
-                </div>
-                <div class="font-mono text-xs border border-subtle rounded px-2 py-0.5 bg-surface text-muted">
-                  {domain.conceptCount}
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
+        <a 
+          href="/curriculum" 
+          class="block w-full text-center px-4 py-2.5 border border-accent bg-accent-muted text-accent font-mono text-[10px] uppercase font-bold rounded-md hover:bg-accent/20 transition-colors"
+        >
+          [EXPLORE_CURRICULUM_PATHWAY]
+        </a>
       </div>
-    </section>
+      
+    </div>
 
-    <!-- Featured Concepts (The Core Manual) -->
-    <section class="py-16 bg-surface/5">
-      <div class="container-site">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <div>
-            <h2 class="font-mono text-xs uppercase tracking-widest text-muted">// CORE_MANUAL_CONCEPTS</h2>
-            <p class="text-sm font-serif text-secondary mt-1">Foundational components of robust AI applications, hand-authored for clarity.</p>
-          </div>
-          <a href="/knowledge" class="font-mono text-xs text-accent hover:underline uppercase flex items-center gap-1">
-            VIEW_ALL_CONCEPTS ({buildMeta.conceptCount}) ↗
+    <!-- Featured Vocabulary index -->
+    <section class="border-t border-subtle/50 pt-12">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 mb-6">
+        <h2 class="font-mono text-xs uppercase tracking-widest text-muted">// FEATURED_AI_VOCABULARY</h2>
+        <span class="font-mono text-[9px] text-muted">// ESSENTIAL_CONCEPTS_TO_START_WITH</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {featuredTerms.map(term => term && (
+          <a href={`/term/${term.id}`} class="figure-frame p-4 hover:border-accent hover:bg-surface/20 transition-all duration-fast block group h-full flex flex-col justify-between">
+            <div class="figure-corner figure-corner--tl"></div>
+            <div class="figure-corner figure-corner--tr"></div>
+            <div class="figure-corner figure-corner--bl"></div>
+            <div class="figure-corner figure-corner--br"></div>
+            <div>
+              <span class="font-mono text-[10px] font-bold text-accent block mb-1.5 group-hover:underline">
+                {term.title}
+              </span>
+              <span class="text-secondary text-[11px] font-serif line-clamp-3 leading-relaxed">
+                {term.summary}
+              </span>
+            </div>
+            <span class="font-mono text-[8px] text-muted block mt-3 uppercase tracking-wider">READ_TERM →</span>
           </a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredConcepts.map(concept => (
-            <ConceptCard concept={concept} />
-          ))}
-        </div>
+        ))}
       </div>
     </section>
-
-    <!-- Recently Synced (From upstream courses) -->
-    {recentConcepts.length > 0 && (
-      <section class="py-16 border-t border-subtle">
-        <div class="container-site">
-          <h2 class="font-mono text-xs uppercase tracking-widest text-muted mb-8">// RECENTLY_SYNCED_LESSONS</h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {recentConcepts.map(concept => (
-              <div class="border border-subtle p-5 rounded-md hover:border-accent transition-colors flex flex-col justify-between">
-                <div>
-                  <span class="font-mono text-[9px] text-muted block mb-2 uppercase">[{concept.difficulty}] • {concept.readTimeMinutes} min read</span>
-                  <h4 class="text-base font-serif font-bold mb-2">
-                    <a href={`/knowledge/${concept.id}`} class="hover:text-accent">
-                      {concept.title}
-                    </a>
-                  </h4>
-                  <p class="text-secondary text-xs font-serif line-clamp-2">
-                    {concept.summary}
-                  </p>
-                </div>
-                <div class="border-t border-subtle/50 mt-4 pt-3 flex justify-between items-center text-[10px] font-mono text-muted">
-                  <span>@{concept.domains[0]}</span>
-                  <span>SYNCED</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    )}
   </main>
 
   <Footer />
 </Base>
+
+<style is:global>
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+</style>
+
+<script define:vars={{ replIndex, totalLessons: buildMeta.lessonCount }}>
+  const input = document.getElementById('repl-search-input');
+  const results = document.getElementById('repl-results');
+  const hint = document.getElementById('repl-hint');
+  
+  let activeIndex = -1;
+  let matches = [];
+
+  function render(list) {
+    matches = list;
+    activeIndex = list.length ? 0 : -1;
+    results.innerHTML = list.map((item, index) => `
+      <li 
+        class="p-2.5 rounded cursor-pointer transition-all border border-transparent flex flex-col gap-0.5 ${index === 0 ? 'bg-[var(--accent-muted)] border-[var(--accent-border)]' : ''}" 
+        data-id="${item.id}"
+      >
+        <span class="text-xs font-bold text-primary">${item.title}</span>
+        <span class="text-[10px] text-secondary line-clamp-1 font-serif">${item.summary}</span>
+      </li>
+    `).join('');
+    
+    hint.style.display = list.length ? 'none' : 'block';
+  }
+
+  function search(query) {
+    query = query.trim().toLowerCase();
+    if (!query) {
+      results.innerHTML = '';
+      hint.style.display = 'block';
+      matches = [];
+      activeIndex = -1;
+      return;
+    }
+
+    const titleMatches = [];
+    const summaryMatches = [];
+    
+    for (const item of replIndex) {
+      if (item.title.toLowerCase().includes(query) || item.id.includes(query)) {
+        titleMatches.push(item);
+      } else if (item.summary.toLowerCase().includes(query)) {
+        summaryMatches.push(item);
+      }
+    }
+    
+    render([...titleMatches, ...summaryMatches].slice(0, 5));
+  }
+
+  function move(direction) {
+    if (!matches.length) return;
+    activeIndex = (activeIndex + direction + matches.length) % matches.length;
+    
+    const children = results.children;
+    for (let i = 0; i < children.length; i++) {
+      if (i === activeIndex) {
+        children[i].classList.add('bg-[var(--accent-muted)]', 'border-[var(--accent-border)]');
+      } else {
+        children[i].classList.remove('bg-[var(--accent-muted)]', 'border-[var(--accent-border)]');
+      }
+    }
+  }
+
+  function selectCurrent() {
+    if (matches[activeIndex]) {
+      window.location.href = `/term/${matches[activeIndex].id}`;
+    }
+  }
+
+  // Keyboard navigation
+  input.addEventListener('input', (e) => search(e.target.value));
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      move(1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      move(-1);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      selectCurrent();
+    }
+  });
+
+  // Clicking a result
+  results.addEventListener('click', (e) => {
+    const li = e.target.closest('li');
+    if (li) {
+      const id = li.getAttribute('data-id');
+      window.location.href = `/term/${id}`;
+    }
+  });
+
+  // Autocomplete typing reveal looping list on load
+  const typingWords = [
+    'context-window',
+    'attention-budget',
+    'rag',
+    'subagent',
+    'mcp-tooling',
+    'vibe-coding',
+    'embeddings',
+    'harness',
+    'smart-zone',
+    'hallucination'
+  ];
+
+  let wordIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  
+  function typeEffect() {
+    if (!input) return;
+    const currentWord = typingWords[wordIndex];
+    
+    if (isDeleting) {
+      input.placeholder = currentWord.slice(0, charIndex--);
+    } else {
+      input.placeholder = currentWord.slice(0, charIndex++);
+    }
+    
+    let delay = isDeleting ? 40 : 80;
+    
+    if (!isDeleting && charIndex > currentWord.length) {
+      isDeleting = true;
+      delay = 2000; // Pause at full word
+    } else if (isDeleting && charIndex < 0) {
+      isDeleting = false;
+      charIndex = 0;
+      wordIndex = (wordIndex + 1) % typingWords.length;
+      delay = 500; // Pause at empty
+    }
+    
+    setTimeout(typeEffect, delay);
+  }
+  
+  setTimeout(typeEffect, 500);
+
+  // Auto-focus input on page click (terminal feel)
+  document.addEventListener('click', (e) => {
+    // only if click was not on an interactive link/button
+    if (e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
+      input.focus();
+    }
+  });
+  input.focus();
+
+  // Sync Homepage Progress Bar
+  const homeProgressFill = document.getElementById('home-progress-fill');
+  const homeProgressPercent = document.getElementById('home-progress-percent');
+
+  function syncHomeProgress() {
+    let completedCount = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('curriculum-completed-') && localStorage.getItem(key) === 'true') {
+        completedCount++;
+      }
+    }
+    
+    const percent = totalLessons ? Math.min(100, Math.round((completedCount / totalLessons) * 100)) : 0;
+    if (homeProgressFill) homeProgressFill.style.width = `${percent}%`;
+    if (homeProgressPercent) homeProgressPercent.innerText = `${percent}% Completed (${completedCount}/${totalLessons})`;
+  }
+
+  syncHomeProgress();
+</script>

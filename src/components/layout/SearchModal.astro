@@ -1,0 +1,211 @@
+---
+// Global Search Modal Component
+---
+
+<div id="global-search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+  <!-- Glassmorphic Backdrop -->
+  <div class="absolute inset-0 bg-canvas/60 backdrop-blur-md" id="global-search-backdrop"></div>
+  
+  <!-- Modal Container -->
+  <div class="relative max-w-2xl mx-auto mt-20 md:mt-32 p-4 w-full">
+    <div class="bg-surface border border-default rounded-lg shadow-2xl overflow-hidden flex flex-col max-h-[500px] figure-frame">
+      <div class="figure-corner figure-corner--tl"></div>
+      <div class="figure-corner figure-corner--tr"></div>
+      <div class="figure-corner figure-corner--bl"></div>
+      <div class="figure-corner figure-corner--br"></div>
+      
+      <!-- Input Prompt Header -->
+      <div class="flex items-center border-b border-subtle px-4 py-3 bg-elevated">
+        <span class="text-accent font-mono mr-3 text-sm shell-prompt">search</span>
+        <input 
+          type="text" 
+          id="global-search-input" 
+          class="flex-1 bg-transparent border-0 outline-none text-primary font-mono text-base placeholder:text-muted" 
+          placeholder="Search glossary or curriculum..." 
+          autocomplete="off"
+        />
+        <div class="flex items-center gap-1.5">
+          <kbd class="border border-subtle rounded px-1.5 py-0.5 text-[10px] font-mono text-muted bg-canvas">↑↓ Navigate</kbd>
+          <kbd class="border border-subtle rounded px-1.5 py-0.5 text-[10px] font-mono text-muted bg-canvas">ESC Close</kbd>
+        </div>
+      </div>
+      
+      <!-- Search Results -->
+      <div id="global-search-results" class="flex-1 overflow-y-auto p-2 space-y-1">
+        <div class="text-muted font-mono text-xs p-4 text-center">Type a query to see matching concepts and lessons...</div>
+      </div>
+      
+      <div class="figure-caption border-t border-subtle bg-elevated text-[10px] py-2 flex justify-between px-4">
+        <span>AI ENGINEERING MANUAL</span>
+        <span>Ctrl + K / Cmd + K to activate anywhere</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import terms from '../../data/terms.json';
+  import curriculum from '../../data/curriculum.json';
+
+  // Combine terms and lessons into a single search index
+  const searchIndex = [
+    ...terms.map(t => ({
+      title: t.title,
+      type: 'dictionary',
+      label: 'DICTIONARY',
+      url: `/term/${t.id}`,
+      snippet: t.summary || ''
+    })),
+    ...curriculum.flatMap(phase => 
+      (phase.lessons || []).map(l => ({
+        title: l.title,
+        type: 'curriculum',
+        label: 'CURRICULUM',
+        url: `/curriculum/${l.slug}`,
+        snippet: l.summary || ''
+      }))
+    )
+  ];
+
+  const modal = document.getElementById('global-search-modal');
+  const backdrop = document.getElementById('global-search-backdrop');
+  const input = document.getElementById('global-search-input') as HTMLInputElement;
+  const resultsContainer = document.getElementById('global-search-results');
+  let selectedIndex = -1;
+  let activeResults = [];
+
+  function openModal() {
+    if (!modal || !input) return;
+    modal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+    input.value = '';
+    input.focus();
+    renderResults('');
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+    selectedIndex = -1;
+  }
+
+  function renderResults(query) {
+    if (!resultsContainer) return;
+    const cleanQuery = query.toLowerCase().trim();
+
+    if (!cleanQuery) {
+      activeResults = [];
+      resultsContainer.innerHTML = '<div class="text-muted font-mono text-xs p-4 text-center">Type to search the manual (e.g. "RAG" or "Token")...</div>';
+      selectedIndex = -1;
+      return;
+    }
+
+    // Direct filter based on title or snippet match
+    activeResults = searchIndex.filter(item => 
+      item.title.toLowerCase().includes(cleanQuery) || 
+      item.snippet.toLowerCase().includes(cleanQuery)
+    ).slice(0, 8); // Max 8 results for clean sizing
+
+    if (activeResults.length === 0) {
+      resultsContainer.innerHTML = '<div class="text-muted font-mono text-xs p-4 text-center">No matching terms or lessons found.</div>';
+      selectedIndex = -1;
+      return;
+    }
+
+    selectedIndex = 0;
+    updateResultsList();
+  }
+
+  function updateResultsList() {
+    if (!resultsContainer) return;
+    resultsContainer.innerHTML = activeResults.map((item, index) => {
+      const isSelected = index === selectedIndex;
+      const selectClass = isSelected 
+        ? 'bg-accent-muted border-accent text-primary' 
+        : 'border-transparent text-secondary hover:bg-surface/50';
+      const labelBadge = item.type === 'dictionary'
+        ? 'text-accent border-accent/20 bg-accent/5'
+        : 'text-success border-success/20 bg-success/5';
+
+      return `
+        <a 
+          href="${item.url}" 
+          class="block p-3 rounded border transition-all duration-150 ${selectClass}"
+          data-index="${index}"
+        >
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-serif font-bold text-sm text-primary">${item.title}</span>
+            <span class="font-mono text-[9px] border rounded px-1 py-0.5 leading-none ${labelBadge}">${item.label}</span>
+          </div>
+          <p class="text-xs line-clamp-1 text-muted">${item.snippet}</p>
+        </a>
+      `;
+    }).join('');
+
+    // Bind click handlers to rendered anchors to ensure correct navigation
+    const anchors = resultsContainer.querySelectorAll('a');
+    anchors.forEach((a, i) => {
+      a.addEventListener('click', (e) => {
+        closeModal();
+      });
+    });
+  }
+
+  // Expose opening via window global custom event
+  window.addEventListener('open-global-search', () => {
+    openModal();
+  });
+
+  // Keyboard navigation & search event listeners
+  window.addEventListener('keydown', (e) => {
+    // 1. Open shortcuts (Ctrl+K / Cmd+K / Slash key when not focused)
+    if ((e.key === 'k' && (e.ctrlKey || e.metaKey)) || (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA')) {
+      e.preventDefault();
+      openModal();
+    }
+
+    // 2. Close shortcut (Esc)
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+
+    // 3. Arrow Down navigation
+    if (e.key === 'ArrowDown' && modal && !modal.classList.contains('hidden')) {
+      e.preventDefault();
+      if (activeResults.length > 0) {
+        selectedIndex = (selectedIndex + 1) % activeResults.length;
+        updateResultsList();
+      }
+    }
+
+    // 4. Arrow Up navigation
+    if (e.key === 'ArrowUp' && modal && !modal.classList.contains('hidden')) {
+      e.preventDefault();
+      if (activeResults.length > 0) {
+        selectedIndex = (selectedIndex - 1 + activeResults.length) % activeResults.length;
+        updateResultsList();
+      }
+    }
+
+    // 5. Enter navigation
+    if (e.key === 'Enter' && modal && !modal.classList.contains('hidden')) {
+      if (selectedIndex >= 0 && selectedIndex < activeResults.length) {
+        e.preventDefault();
+        const url = activeResults[selectedIndex].url;
+        closeModal();
+        window.location.href = url;
+      }
+    }
+  });
+
+  if (input) {
+    input.addEventListener('input', (e) => {
+      renderResults((e.target as HTMLInputElement).value);
+    });
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', closeModal);
+  }
+</script>

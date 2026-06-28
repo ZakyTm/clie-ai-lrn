@@ -1,0 +1,184 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Breadcrumb from '../../components/layout/Breadcrumb.astro';
+import curriculum from '../../data/curriculum.json';
+import buildMeta from '../../data/build-meta.json';
+---
+
+<Base title="AI Engineering Curriculum" description="A structured, step-by-step roadmap for software engineers learning to build AI systems.">
+  <Header activeTab="curriculum" />
+
+  <main class="flex-grow container-site py-8">
+    <Breadcrumb items={[{ label: 'CURRICULUM', href: '/curriculum' }]} />
+
+    <!-- Hero Header -->
+    <section class="max-w-3xl mt-8 mb-12">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent mb-2">// LEARNING_PATHWAY</p>
+      <h1 class="font-serif text-3xl md:text-5xl font-bold mb-4">
+        AI Engineering from Scratch
+      </h1>
+      <p class="text-secondary text-base font-serif leading-relaxed">
+        A complete educational curriculum structured into {buildMeta.phaseCount} phases and {buildMeta.lessonCount} practical lessons. Prototype core mathematical foundations, assemble deep learning neural networks, deploy agents on local sandboxes, and integrate production-grade swarms.
+      </p>
+
+      <!-- Client-side Progress Bar -->
+      <div class="mt-6 p-4 border border-subtle/50 bg-surface/20 rounded-md max-w-lg">
+        <div class="flex justify-between items-center font-mono text-[10px] text-secondary mb-2">
+          <span>PROGRESS TRACKER (LOCAL)</span>
+          <span id="progress-percent">0% Completed</span>
+        </div>
+        <div class="w-full bg-canvas border border-subtle/30 h-2.5 rounded-full overflow-hidden">
+          <div id="progress-fill" class="bg-accent h-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+        <p class="text-muted text-[9px] mt-2 font-mono">// Checked lessons are stored locally in your browser's cache.</p>
+      </div>
+    </section>
+
+    <!-- Phase Roadmap timeline -->
+    <div class="relative pl-6 md:pl-8 border-l border-subtle/60 max-w-4xl space-y-12">
+      {curriculum.map((phase: any) => (
+        <div class="relative group">
+          <!-- Timeline dot -->
+          <div class="absolute -left-[31px] md:-left-[39px] top-1.5 w-4 h-4 rounded-full border-4 border-canvas bg-accent group-hover:scale-125 transition-transform"></div>
+
+          <!-- Phase Content -->
+          <div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
+              <div>
+                <span class="font-mono text-[10px] text-accent font-bold uppercase tracking-wider block mb-0.5">PHASE {phase.id.split('-')[0]}</span>
+                <h2 class="font-serif text-xl font-bold text-primary">
+                  {phase.title}
+                </h2>
+              </div>
+              <div class="flex flex-col items-end gap-1.5">
+                <span class="font-mono text-[9px] text-muted whitespace-nowrap bg-surface px-2 py-0.5 border border-subtle/50 rounded">
+                  {phase.lessons.length} lessons compiled
+                </span>
+                <!-- Phase-specific progress bar -->
+                <div class="flex items-center gap-2">
+                  <span class="phase-progress-text font-mono text-[8px] text-muted" data-phase-id={phase.id}>0% (0/0)</span>
+                  <div class="w-24 bg-canvas border border-subtle/30 h-1.5 rounded-full overflow-hidden">
+                    <div class="phase-progress-fill bg-accent h-full transition-all duration-500" data-phase-id={phase.id} style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lessons Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              {phase.lessons.map((lesson: any) => (
+                <div class="figure-frame p-4 bg-surface/20 hover:border-accent hover:bg-surface/40 transition-all duration-fast flex items-start gap-3 relative">
+                  <div class="figure-corner figure-corner--tl"></div>
+                  <div class="figure-corner figure-corner--tr"></div>
+                  <div class="figure-corner figure-corner--bl"></div>
+                  <div class="figure-corner figure-corner--br"></div>
+
+                  <!-- Progress Checkbox -->
+                  <input 
+                    type="checkbox" 
+                    id={`check-${lesson.id}`} 
+                    class="lesson-checkbox mt-1 cursor-pointer w-3.5 h-3.5 border-subtle text-accent focus:ring-accent rounded bg-canvas"
+                    data-lesson-id={lesson.id}
+                    data-phase-id={phase.id}
+                  />
+
+                  <div class="flex-grow">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class={`font-mono text-[8px] uppercase px-1.5 py-0.2 rounded border ${
+                        lesson.difficulty === 'beginner' 
+                          ? 'text-green-400 bg-green-500/5 border-green-500/10' 
+                          : lesson.difficulty === 'intermediate'
+                          ? 'text-yellow-500 bg-yellow-500/5 border-yellow-500/10'
+                          : 'text-red-400 bg-red-500/5 border-red-500/10'
+                      }`}>
+                        {lesson.difficulty}
+                      </span>
+                      <span class="font-mono text-[9px] text-secondary">{lesson.readTimeMinutes} min</span>
+                    </div>
+                    <a href={`/curriculum/${lesson.id}`} class="text-xs font-bold text-primary hover:text-accent hover:underline block mb-1">
+                      {lesson.title}
+                    </a>
+                    <span class="text-secondary text-[11px] font-serif line-clamp-2 leading-relaxed">
+                      {lesson.summary}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  const checkboxes = document.querySelectorAll('.lesson-checkbox') as NodeListOf<HTMLInputElement>;
+  const progressFill = document.getElementById('progress-fill') as HTMLDivElement;
+  const progressPercent = document.getElementById('progress-percent') as HTMLSpanElement;
+
+  // Select phase progress display elements
+  const phaseTexts = document.querySelectorAll('.phase-progress-text') as NodeListOf<HTMLSpanElement>;
+  const phaseFills = document.querySelectorAll('.phase-progress-fill') as NodeListOf<HTMLDivElement>;
+
+  function updateProgress() {
+    let checkedCount = 0;
+    const phaseStats: Record<string, { total: number; checked: number }> = {};
+
+    checkboxes.forEach(cb => {
+      const isChecked = localStorage.getItem(`curriculum-completed-${cb.dataset.lessonId}`) === 'true';
+      cb.checked = isChecked;
+      if (isChecked) checkedCount++;
+
+      const phaseId = cb.dataset.phaseId || '';
+      if (phaseId) {
+        if (!phaseStats[phaseId]) {
+          phaseStats[phaseId] = { total: 0, checked: 0 };
+        }
+        phaseStats[phaseId].total++;
+        if (isChecked) {
+          phaseStats[phaseId].checked++;
+        }
+      }
+    });
+
+    const percent = checkboxes.length ? Math.round((checkedCount / checkboxes.length) * 100) : 0;
+    if (progressFill) progressFill.style.width = `${percent}%`;
+    if (progressPercent) progressPercent.innerText = `${percent}% Completed (${checkedCount}/${checkboxes.length})`;
+
+    // Update phase-specific progress indicators
+    phaseTexts.forEach(el => {
+      const phaseId = el.dataset.phaseId || '';
+      const stats = phaseStats[phaseId];
+      if (stats) {
+        const phasePercent = stats.total ? Math.round((stats.checked / stats.total) * 100) : 0;
+        el.innerText = `${phasePercent}% (${stats.checked}/${stats.total})`;
+      }
+    });
+
+    phaseFills.forEach(el => {
+      const phaseId = el.dataset.phaseId || '';
+      const stats = phaseStats[phaseId];
+      if (stats) {
+        const phasePercent = stats.total ? Math.round((stats.checked / stats.total) * 100) : 0;
+        el.style.width = `${phasePercent}%`;
+      }
+    });
+  }
+
+  // Bind local storage events
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      localStorage.setItem(`curriculum-completed-${target.dataset.lessonId}`, target.checked ? 'true' : 'false');
+      updateProgress();
+    });
+  });
+
+  // Run progress load
+  updateProgress();
+</script>

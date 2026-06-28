@@ -39,15 +39,24 @@ import Breadcrumb from '../components/layout/Breadcrumb.astro';
         >
           [RETURN_INDEX]
         </a>
-        <a 
-          href="/search" 
-          class="px-4 py-2 border border-accent bg-accent-muted text-accent hover:bg-accent/25 hover:text-accent-hover rounded transition-all"
+        <button 
+          id="trigger-404-search" 
+          class="px-4 py-2 border border-accent bg-accent-muted text-accent hover:bg-accent/25 hover:text-accent-hover rounded transition-all font-mono"
         >
           [EXECUTE_SEARCH]
-        </a>
+        </button>
       </div>
     </div>
   </main>
 
   <Footer />
 </Base>
+
+<script>
+  const searchBtn = document.getElementById('trigger-404-search');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('open-global-search'));
+    });
+  }
+</script>

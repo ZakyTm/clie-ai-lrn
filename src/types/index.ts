@@ -1,27 +1,34 @@
-export interface Domain {
+export interface Term {
   id: string;
   title: string;
-  description: string;
-  icon: string;
-  color: string;
-  conceptCount: number;
-  order: number;
+  summary: string;
+  body: string;
+  avoid?: string;
+  usage?: string;
+  related: string[];
+  section: string;
+  readTimeMinutes: number;
+  sourceRepo: "manual" | "reference";
+  sources?: string[];
+  lastUpdated: string;
 }
 
-export interface Concept {
+export interface Lesson {
   id: string;
   title: string;
-  domains: string[];
+  phaseId: string;
   difficulty: "beginner" | "intermediate" | "advanced";
   summary: string;
-  body?: string;
-  resources: Resource[];
-  related: string[];
-  tags: string[];
-  sourceRepo: string;
-  lastUpdated: string;
+  body: string;
+  resources: string[]; // resource IDs
   readTimeMinutes: number;
-  featured: boolean;
+}
+
+export interface Phase {
+  id: string;
+  title: string;
+  order: number;
+  lessons: Lesson[];
 }
 
 export interface Resource {
@@ -38,8 +45,9 @@ export interface Resource {
 
 export interface BuildMeta {
   lastSynced: string;
-  conceptCount: number;
+  termCount: number;
+  phaseCount: number;
+  lessonCount: number;
   resourceCount: number;
-  domainCount: number;
-  syncedRepos: string[];
 }
+

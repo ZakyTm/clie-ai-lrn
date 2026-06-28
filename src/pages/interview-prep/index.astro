@@ -1,0 +1,283 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Breadcrumb from '../../components/layout/Breadcrumb.astro';
+
+const questions = [
+  {
+    id: "q-rag-vs-finetuning",
+    category: "SYSTEMS_DESIGN",
+    question: "When should you use Retrieval-Augmented Generation (RAG) vs. Fine-tuning?",
+    answer: "Use **RAG** for injecting dynamic, real-time facts, handling private datasets, and keeping records up-to-date (low cost, immediate, updates factual context). Use **Fine-tuning** for training the model on tone, custom formatting styles, specific formatting rules, specialized syntax, or learning a specific dialect/API grammar (expensive, requires retraining, updates model parameters)."
+  },
+  {
+    id: "q-context-window-leakage",
+    category: "CONTEXT_LIMITS",
+    question: "What is attention degradation (lost-in-the-middle) and how do you prevent context window bloating?",
+    answer: "Attention degradation occurs when a model loses the ability to follow instructions when the context window is stuffed to capacity. To prevent it, implement **context compaction** (summarizing older messages), **prompt truncation**, **semantic pruning** (retaining only top-k relevant embeddings), or **system prompt placement** (re-injecting instructions at the very end of the chat stream)."
+  },
+  {
+    id: "q-mcp",
+    category: "AGENT_TOOLING",
+    question: "Explain the Model Context Protocol (MCP) and how it solves integration problems.",
+    answer: "Model Context Protocol (MCP) is an open standard designed by Anthropic that acts like a USB port for AI models. Instead of writing custom API integration code for every tool, database, and IDE, developers build standard **MCP Servers** that expose resources, prompts, and tools. Any client (like an IDE or agent) can query the server over standard JSON-RPC 2.0 protocol via standard I/O (stdin/stdout) or SSE to run tool actions securely."
+  },
+  {
+    id: "q-hallucination",
+    category: "FAILURE_MODES",
+    question: "What is the difference between factuality hallucinations and faithfulness hallucinations?",
+    answer: "**Factuality hallucinations** are when the model lacks parametric knowledge and guesses an answer (e.g. citing a library that does not exist). Fix this by adding correct context. **Faithfulness hallucinations** occur when the information is in context, but the model fails to adhere to it due to attention degradation. Fix this by pruning or reducing the size of the context window."
+  },
+  {
+    id: "q-temperature-sampling",
+    category: "SAMPLING_INFRA",
+    question: "How do temperature and top-p sampling affect LLM output generation?",
+    answer: "During next-token prediction, the model computes probabilities. **Temperature** scales the logits before softmax: a temperature near 0 makes the model select only the most likely token (deterministic), while higher values flatten the curve, making rare tokens more probable (creative/noisy). **Top-p (nucleus sampling)** limits selection to the top tokens whose cumulative probability is less than p (e.g., top-p=0.9 is the top 90% most likely options), pruning out the long tail of improbable choices."
+  }
+];
+---
+
+<Base title="AI Engineering Interview Prep" description="Interactive flashcards covering high-frequency AI engineering and LLM system questions.">
+  <Header activeTab="interview-prep" />
+
+  <main class="flex-grow container-site py-8">
+    <Breadcrumb items={[{ label: 'INTERVIEW PREP', href: '/interview-prep' }]} />
+
+    <!-- Hero Header -->
+    <section class="max-w-3xl mt-8 mb-12">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent mb-2">// PREPARATION_FLIPCARDS</p>
+      <h1 class="font-serif text-3xl md:text-5xl font-bold mb-4">
+        Interview Preparation
+      </h1>
+      <p class="text-secondary text-base font-serif leading-relaxed">
+        Master high-frequency concepts asked in AI systems design and engineering loops. Click any card to run the answer decode.
+      </p>
+    </section>
+
+    <!-- Flipcards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+      {questions.map((q) => (
+        <div 
+          class="card-flip-container cursor-pointer h-72 w-full group focus:outline-none"
+          tabindex="0"
+          data-card-id={q.id}
+        >
+          <div class="card-flip-inner relative w-full h-full transition-transform duration-500 preserve-3d">
+            <!-- Front of card (Question) -->
+            <div class="card-front absolute w-full h-full backface-hidden figure-frame p-6 bg-surface border-subtle/70 flex flex-col justify-between">
+              <div class="figure-corner figure-corner--tl"></div>
+              <div class="figure-corner figure-corner--tr"></div>
+              <div class="figure-corner figure-corner--bl"></div>
+              <div class="figure-corner figure-corner--br"></div>
+              
+              <div>
+                <span class="font-mono text-[9px] text-accent uppercase tracking-wider block mb-3">// {q.category}</span>
+                <h3 class="text-base font-serif font-bold text-primary leading-snug">
+                  {q.question}
+                </h3>
+              </div>
+              
+              <div class="font-mono text-[9px] text-muted flex items-center justify-between">
+                <span>[CLICK_TO_DECODE_ANSWER]</span>
+                <span>ENTER ↵</span>
+              </div>
+            </div>
+
+            <!-- Back of card (Answer) -->
+            <div class="card-back absolute w-full h-full backface-hidden figure-frame p-6 bg-accent-muted border-accent/40 flex flex-col justify-between rotate-y-180">
+              <div class="figure-corner figure-corner--tl"></div>
+              <div class="figure-corner figure-corner--tr"></div>
+              <div class="figure-corner figure-corner--bl"></div>
+              <div class="figure-corner figure-corner--br"></div>
+
+              <div class="overflow-y-auto pr-1 flex-grow">
+                <span class="font-mono text-[9px] text-accent uppercase tracking-wider block mb-2">// DECODE_RESULT</span>
+                <p class="text-secondary text-xs font-serif leading-relaxed">
+                  {q.answer}
+                </p>
+              </div>
+
+              <div class="font-mono text-[9px] text-accent mt-3">
+                <span>[CLICK_TO_FLIP_BACK]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Prompt Templates Section -->
+    <section class="border-t border-subtle/50 pt-12 mt-16 max-w-4xl">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 mb-6">
+        <div>
+          <p class="font-mono text-xs uppercase tracking-widest text-accent mb-1">// SYSTEM_PROMPTS</p>
+          <h2 class="font-serif text-2xl font-bold">Developer Prompt Templates</h2>
+        </div>
+        <span class="font-mono text-[9px] text-muted">// COPY_AND_PASTE_INTO_YOUR_LLM</span>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Prompt 1: Socratic Partner -->
+        <div class="figure-frame p-6 bg-surface/30 relative">
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+          
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-3">
+            <h3 class="text-base font-serif font-bold text-primary">1. Socratic Coding Partner</h3>
+            <button 
+              class="copy-prompt-btn px-3 py-1 border border-accent bg-accent-muted text-accent hover:bg-accent/25 rounded transition-all font-mono text-[10px] uppercase font-bold cursor-pointer"
+              data-prompt-id="prompt-socratic"
+            >
+              [COPY_PROMPT 📋]
+            </button>
+          </div>
+          <p class="text-secondary text-xs font-serif leading-relaxed mb-4">
+            Forces the LLM to guide you step-by-step through a programming problem without typing out the full solution, improving recall and comprehension.
+          </p>
+          <pre id="prompt-socratic" class="text-[11px] font-mono text-muted bg-canvas/30 p-4 border border-subtle/40 rounded overflow-x-auto whitespace-pre-wrap">Act as a strict, senior Socratic programming tutor. When I ask you for help with a coding problem, do NOT write the solution for me. Instead, explain the core computer science concepts behind the issue, ask me leading questions to help me identify where my code is going wrong, and guide me toward writing the solution myself one step at a time.</pre>
+        </div>
+
+        <!-- Prompt 2: Context Compactor -->
+        <div class="figure-frame p-6 bg-surface/30 relative">
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+          
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-3">
+            <h3 class="text-base font-serif font-bold text-primary">2. Context Window Compactor</h3>
+            <button 
+              class="copy-prompt-btn px-3 py-1 border border-accent bg-accent-muted text-accent hover:bg-accent/25 rounded transition-all font-mono text-[10px] uppercase font-bold cursor-pointer"
+              data-prompt-id="prompt-compactor"
+            >
+              [COPY_PROMPT 📋]
+            </button>
+          </div>
+          <p class="text-secondary text-xs font-serif leading-relaxed mb-4">
+            Instructs the LLM to compress a long chat history or code base description into a dense memory summary, saving token usage in future prompts.
+          </p>
+          <pre id="prompt-compactor" class="text-[11px] font-mono text-muted bg-canvas/30 p-4 border border-subtle/40 rounded overflow-x-auto whitespace-pre-wrap">Analyze the chat history and code files provided. Compile a highly compressed summary of the current project state, active memory parameters, files modified, outstanding bugs, and structural rules. Omit generic conversational filler. Keep the summary under 300 words, formatted as a dense markdown list, optimized for ingestion by another AI context window.</pre>
+        </div>
+
+        <!-- Prompt 3: Sandbox Validator -->
+        <div class="figure-frame p-6 bg-surface/30 relative">
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+          
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-3">
+            <h3 class="text-base font-serif font-bold text-primary">3. Architectural Sandbox Validator</h3>
+            <button 
+              class="copy-prompt-btn px-3 py-1 border border-accent bg-accent-muted text-accent hover:bg-accent/25 rounded transition-all font-mono text-[10px] uppercase font-bold cursor-pointer"
+              data-prompt-id="prompt-validator"
+            >
+              [COPY_PROMPT 📋]
+            </button>
+          </div>
+          <p class="text-secondary text-xs font-serif leading-relaxed mb-4">
+            Audits your code implementations against project rules (like no backend databases or strict styling tokens) and outputs clean validation results.
+          </p>
+          <pre id="prompt-validator" class="text-[11px] font-mono text-muted bg-canvas/30 p-4 border border-subtle/40 rounded overflow-x-auto whitespace-pre-wrap">Audit the attached code changes against the following strict constraints:
+1. Zero server-side databases (no Supabase, Postgres, Firebase).
+2. Zero user authentication or user state storage.
+3. Pure static compilation flow (pre-rendered JSON databases only).
+4. Symmetrical CSS utility conventions (Newsreader for serif, JetBrains Mono for monospace, Space Grotesk for headers).
+
+Output a list of COMPLIANT, WARNING, or CRITICAL violations with file paths and line-level recommendations.</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style is:global>
+  /* 3D Flipcard styles */
+  .card-flip-container {
+    perspective: 1000px;
+  }
+  .card-flip-inner {
+    transform-style: preserve-3d;
+  }
+  .card-flip-container.flipped .card-flip-inner {
+    transform: rotateY(180deg);
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+</style>
+
+<script>
+  const containers = document.querySelectorAll('.card-flip-container');
+  containers.forEach(container => {
+    // Toggle flip on click
+    container.addEventListener('click', () => {
+      container.classList.toggle('flipped');
+    });
+
+    // Support keyboard toggle
+    container.addEventListener('keydown', (e: any) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        container.classList.toggle('flipped');
+      }
+    });
+  });
+
+  // Copy prompt templates clipboard logic
+  const copyPromptBtns = document.querySelectorAll('.copy-prompt-btn');
+  copyPromptBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const promptId = btn.getAttribute('data-prompt-id');
+      if (!promptId) return;
+      const textEl = document.getElementById(promptId);
+      if (!textEl) return;
+      
+      const promptText = textEl.innerText.trim();
+      
+      const copyText = (text: string) => {
+        if (navigator.clipboard && window.isSecureContext) {
+          return navigator.clipboard.writeText(text);
+        } else {
+          const textArea = document.createElement('textarea');
+          textArea.value = text;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-9999px';
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand('copy');
+          } catch (err) {
+            console.error('Fallback copy failed', err);
+          }
+          document.body.removeChild(textArea);
+          return Promise.resolve();
+        }
+      };
+
+      copyText(promptText).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span>[COPIED_TO_CLIPBOARD! ✓]</span>';
+        btn.classList.add('border-green-500', 'text-green-500');
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('border-green-500', 'text-green-500');
+        }, 2000);
+      }).catch((err) => {
+        console.error('Failed to copy text', err);
+      });
+    });
+  });
+</script>
