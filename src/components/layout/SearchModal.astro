@@ -150,6 +150,12 @@
         closeModal();
       });
     });
+
+    // Scroll active element into view
+    const selectedEl = resultsContainer.querySelector(`[data-index="${selectedIndex}"]`) as HTMLElement;
+    if (selectedEl) {
+      selectedEl.scrollIntoView({ block: 'nearest' });
+    }
   }
 
   // Expose opening via window global custom event
