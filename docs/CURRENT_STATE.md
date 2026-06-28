@@ -17,6 +17,7 @@ The project has successfully established a local MVP build of "The Manual". It o
 *   **Feature B (Local CLI lookup tool)**: Built and registered a local terminal executable CLI utility `man-ai` (`bin/cli.mjs`) supporting command-line concept searches, alphabetized listings (`--list`), help outputs, and retro Unix `man` page formatting with ANSI colorizations.
 *   **Feature C (Developer Prompt Templates & Socratic Quiz Prompter)**: Added Socratic clipboard quiz prompt builders (`[QUIZ_ME_PROMPT 📋]`) to all 73 glossary terms and 503 curriculum lessons. Implemented a Developer Prompt Templates library under `/interview-prep` featuring copy-paste Socratic Coding Partner, Context Compactor, and Sandbox Validator instructions.
 *   **Feature D (Interactive Glossary Quizzes & 'Plugin' Concept)**: Added a new glossary term `plugins` mapping the architecture differences between MCP, skills, agents, and plugins. Built a fully interactive 3-question Socratic multiple-choice quiz component for all 73 glossary terms with local storage completion checks, mastery header badges, and visual title stars.
+*   **Feature E (Systematic Interview Prep Checklist)**: Designed and implemented a 4-pillar interactive study framework checklist on the `/interview-prep` page with local storage persistence and a live monospace progress bar indicator.
 
 ## 3. Active Branch & Version Status
 *   **Active Working Branch**: `develop` (all Phase 0 & 1 changes staged and committed).

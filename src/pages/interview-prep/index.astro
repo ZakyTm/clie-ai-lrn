@@ -191,6 +191,157 @@ Output a list of COMPLIANT, WARNING, or CRITICAL violations with file paths and 
         </div>
       </div>
     </section>
+
+    <!-- Interview Prep Systematic Framework -->
+    <section class="border-t border-subtle/50 pt-12 mt-16 max-w-4xl">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <div>
+          <p class="font-mono text-xs uppercase tracking-widest text-accent mb-1">// PREP_SYSTEMATIC_FRAMEWORK</p>
+          <h2 class="font-serif text-2xl font-bold">Pillar-Based Study Checklist</h2>
+        </div>
+        
+        <!-- Live Progress Tracker -->
+        <div class="font-mono text-xs border border-subtle bg-surface/50 p-4 rounded min-w-[280px]">
+          <div class="flex justify-between mb-1.5 font-bold">
+            <span>PREP_COMPLETION</span>
+            <span id="prep-percentage">0%</span>
+          </div>
+          <div class="w-full bg-canvas border border-subtle h-2.5 rounded overflow-hidden">
+            <div id="prep-progress-bar" class="bg-accent h-full transition-all duration-normal" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Pillar 1: LLM Foundations -->
+        <div class="figure-frame p-5 bg-surface/20 relative">
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+          <h3 class="font-mono text-xs text-accent uppercase tracking-widest mb-4">Pillar 1: Core LLM Foundations</h3>
+          <ul class="space-y-3 font-serif text-xs text-secondary">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-tokens-prediction" />
+              <div>
+                <strong class="text-primary block">Next-Token Prediction & Tokenization</strong>
+                Understand character fragment encoding constraints and standard BPE vocabulary limits.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-sampling-parameters" />
+              <div>
+                <strong class="text-primary block">Logits & Sampling Math</strong>
+                Master Temperature scaling and Top-p (nucleus sampling) softmax mathematical impacts.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-context-compaction" />
+              <div>
+                <strong class="text-primary block">Context Compaction & Pruning</strong>
+                Learn to implement older message summaries and sliding context window sliding parameters.
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pillar 2: Scaling & Distributed serving -->
+        <div class="figure-frame p-5 bg-surface/20 relative">
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+          <h3 class="font-mono text-xs text-accent uppercase tracking-widest mb-4">Pillar 2: Distributed Infra & Scaling</h3>
+          <ul class="space-y-3 font-serif text-xs text-secondary">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-parallel-ddp" />
+              <div>
+                <strong class="text-primary block">Data Parallelism (DDP vs. FSDP)</strong>
+                Study batch distribution, gradient all-reduce synchronization, and collective execution ops.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-zero-sharding" />
+              <div>
+                <strong class="text-primary block">ZeRO Optimizer State Sharding</strong>
+                Analyze ZeRO-1, ZeRO-2, and ZeRO-3 sharded parameter communication overheads.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-mixed-precision" />
+              <div>
+                <strong class="text-primary block">Gradient Accumulation & FP16</strong>
+                Understand virtual batch sizes, scaling factors, and mixed-precision gradient overflow.
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pillar 3: Grounding & Retrieval -->
+        <div class="figure-frame p-5 bg-surface/20 relative">
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+          <h3 class="font-mono text-xs text-accent uppercase tracking-widest mb-4">Pillar 3: Context Retrieval (RAG)</h3>
+          <ul class="space-y-3 font-serif text-xs text-secondary">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-chunking-strategies" />
+              <div>
+                <strong class="text-primary block">Chunking & Embeddings</strong>
+                Compare semantic, recursive character, and overlapping boundary chunking strategies.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-vector-indexes" />
+              <div>
+                <strong class="text-primary block">Vector Similarity & Reranking</strong>
+                Compare BM25 hybrid retrieval, dense cosine vector metrics, and cross-encoder reranking.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-rag-evals" />
+              <div>
+                <strong class="text-primary block">RAG Evaluation Metrics</strong>
+                Study NDCG, MRR, Faithfulness, Context Recall, and Answer Relevance criteria.
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pillar 4: Agent Orchestration -->
+        <div class="figure-frame p-5 bg-surface/20 relative">
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+          <h3 class="font-mono text-xs text-accent uppercase tracking-widest mb-4">Pillar 4: Agent Design & Tooling</h3>
+          <ul class="space-y-3 font-serif text-xs text-secondary">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-agent-loops" />
+              <div>
+                <strong class="text-primary block">ReAct Loop & State Preservation</strong>
+                Master plan-action-observation cycles and window memory buffering states.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-mcp-standards" />
+              <div>
+                <strong class="text-primary block">Model Context Protocol (MCP)</strong>
+                Understand Client/Server tool calls, JSON-RPC 2.0 schemas, and stdin/stdout security.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" class="prep-cb cursor-pointer mt-0.5" data-task-id="prep-plugins-skills" />
+              <div>
+                <strong class="text-primary block">Plugin Packaging & Custom Skills</strong>
+                Compare custom task rules, subagent tool mounts, and modular plugin delivery packages.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
   </main>
 
   <Footer />
@@ -280,4 +431,39 @@ Output a list of COMPLIANT, WARNING, or CRITICAL violations with file paths and 
       });
     });
   });
+
+  // 3. Interview Prep Checklist Controller
+  const checkboxes = document.querySelectorAll('.prep-cb') as NodeListOf<HTMLInputElement>;
+  const progressBar = document.getElementById('prep-progress-bar');
+  const percentageText = document.getElementById('prep-percentage');
+
+  function updatePrepProgress() {
+    let checkedCount = 0;
+    checkboxes.forEach(cb => {
+      if (cb.checked) checkedCount++;
+    });
+    const totalCount = checkboxes.length;
+    const percentage = totalCount > 0 ? Math.round((checkedCount / totalCount) * 100) : 0;
+    
+    if (progressBar) progressBar.style.width = `${percentage}%`;
+    if (percentageText) percentageText.innerText = `${percentage}%`;
+  }
+
+  // Load saved states
+  checkboxes.forEach(cb => {
+    const taskId = cb.getAttribute('data-task-id');
+    if (taskId) {
+      cb.checked = localStorage.getItem(`interview-prep-${taskId}`) === 'true';
+    }
+    
+    cb.addEventListener('change', () => {
+      if (taskId) {
+        localStorage.setItem(`interview-prep-${taskId}`, cb.checked ? 'true' : 'false');
+      }
+      updatePrepProgress();
+    });
+  });
+
+  // Initial calculation
+  updatePrepProgress();
 </script>
