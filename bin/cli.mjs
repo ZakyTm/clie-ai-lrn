@@ -67,7 +67,7 @@ if (matchedTerm) {
 // Help documentation menu
 function printHelp() {
   console.log(`
-\x1b[1mAI-MAN(1)\x1b[22m                       \x1b[1mAI Engineering Manual\x1b[22m                       \x1b[1mAI-MAN(1)\x1b[22m
+\x1b[1mCAIL(1)\x1b[22m                       \x1b[1mClie-AI-LRN Manual\x1b[22m                       \x1b[1mCAIL(1)\x1b[22m
 
 \x1b[1;33mNAME\x1b[22m
        \x1b[1mman-ai\x1b[22m - Search and read AI engineering concepts directly in your shell
@@ -78,7 +78,7 @@ function printHelp() {
        \x1b[1mman-ai\x1b[22m [ \x1b[1m--help\x1b[22m | \x1b[1m-h\x1b[22m ]
 
 \x1b[1;33mDESCRIPTION\x1b[22m
-       \x1b[1mman-ai\x1b[22m  is a command-line interface helper to explore "The Manual of AI Engineering". 
+       \x1b[1mman-ai\x1b[22m  is a command-line interface helper to explore "Clie-AI-LRN". 
        It pulls rephrased concepts, stateful tools, failure modes, and architectural 
        rules, formatting them as retro Unix manual entries.
 
@@ -96,13 +96,13 @@ function printHelp() {
        \x1b[36mman-ai subagent\x1b[39m
               Display the manual page for Subagents and tool delegation.
 
-\x1b[1mAI Engineering Manual v0.2.1\x1b[22m        June 2026                           \x1b[1mZakyTm Repo\x1b[22m
+\x1b[1mClie-AI-LRN v0.2.1\x1b[22m                  June 2026                           \x1b[1mZakyTm Repo\x1b[22m
   `);
 }
 
 // Print alphabetical list of terms
 function printList() {
-  console.log(`\n\x1b[1;33mTHE AI ENGINEER'S MANUAL - ALL COMPILED TERMS:\x1b[22m`);
+  console.log(`\n\x1b[1;33mCLIE-AI-LRN - ALL COMPILED TERMS:\x1b[22m`);
   
   // Sort alphabetically by title
   const sorted = [...terms].sort((a, b) => a.title.localeCompare(b.title));
@@ -149,7 +149,7 @@ function printManPage(term) {
     : '\x1b[1;31m[UNVERIFIED REFERENCE ENTRY]\x1b[22m';
 
   console.log(`
-\x1b[1mAI-MAN(1)\x1b[22m                       \x1b[1mAI Engineering Manual\x1b[22m                       \x1b[1mAI-MAN(1)\x1b[22m
+\x1b[1mCAIL(1)\x1b[22m                       \x1b[1mClie-AI-LRN Manual\x1b[22m                       \x1b[1mCAIL(1)\x1b[22m
 
 \x1b[1;33mNAME\x1b[22m
        \x1b[1m${term.title}\x1b[22m - ${term.summary}
@@ -169,6 +169,6 @@ ${term.related && term.related.length ? `
 \x1b[1;33mSEE ALSO\x1b[22m
        ${term.related.join(', ')}` : ''}
 
-\x1b[1mAI Engineering Manual v0.2.1\x1b[22m        June 2026                           \x1b[1mZakyTm Repo\x1b[22m
+\x1b[1mClie-AI-LRN v0.2.1\x1b[22m                  June 2026                           \x1b[1mZakyTm Repo\x1b[22m
   `);
 }

@@ -1,12 +1,12 @@
 {
-  "name": "ai-engineering-manual",
+  "name": "clie-ai-lrn",
   "version": "0.2.1",
   "description": "An open-source educational platform and terminal REPL dictionary for AI engineering concepts.",
   "author": "Toumi Zakaria <zakaria.toumi.zt@gmail.com>",
   "license": "GPL-3.0-or-later",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ZakyTm/ai-engineering-manual.git"
+    "url": "git+https://github.com/ZakyTm/clie-ai-lrn.git"
   },
   "bin": {
     "man-ai": "./bin/cli.mjs"

@@ -1,4 +1,4 @@
-# The AI Engineer's Manual
+# Clie-AI-LRN (C-AI-L)
 
 ```text
   █████╗ ██╗    ███╗   ███╗ █████╗ ███╗   ██╗██╗   ██╗ █████╗ ██╗     
@@ -7,7 +7,7 @@
  ██╔══██║██║    ██║╚██╔╝██║██╔══██║██║╚██╗██║██║   ██║██╔══██║██║     
  ██║  ██║██║    ██║ ╚═╝ ██║██║  ██║██║ ╚████║╚██████╔╝██║  ██║███████╗
  ╚═╝  ╚═╝╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
-                          [ THE MANUAL v0.2.1 ]
+                          [ CLIE-AI-LRN v0.2.1 ]
 ```
 
 An open-source, plain-English dictionary of AI engineering concepts and a step-by-step curriculum learning roadmap. Designed like a printed dictionary crossed with a Unix `man` page under a retro phosphor terminal.
