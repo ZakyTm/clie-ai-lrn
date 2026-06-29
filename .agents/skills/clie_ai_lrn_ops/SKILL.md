@@ -14,6 +14,10 @@ Use this skill when modifying, maintaining, compiling, or deploying the **Clie-A
 *   **Static-First Generation**: Built entirely on **Astro** and **Tailwind CSS v4**.
 *   **Zero-Database / Zero-Auth**: Absolutely no backend databases (Supabase, Postgres, Firebase, etc.) or user login systems are allowed.
 *   **Local State**: All persistent interactive features (like Socratic quiz scoring and curriculum checklists) must be saved client-side using `localStorage`.
+*   **Header Navigation Layout**:
+    *   **Search Pill**: A pill-styled button (`#header-search-toggle`) displaying `SEARCH...` and a `CTRL K` shortcut indicator.
+    *   **Theme Toggle**: A pill-styled button (`#theme-toggle`) containing `theme-icon-sun` and `theme-icon-moon` SVG elements. JavaScript swaps class lists (`bg-accent text-canvas font-bold`) to highlight the active theme.
+    *   **GitHub Pill**: A pill-styled link displaying stargazers count dynamically fetched from the `/repos/ZakyTm/clie-ai-lrn` API endpoint.
 
 ---
 
