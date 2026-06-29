@@ -1,38 +1,38 @@
-# Contributing to AI Engineering Hub
+# Contributing to Clie-AI-LRN (C-AI-L)
 
-Thank you for your interest in contributing to the AI Engineering Hub! 
+Thank you for your interest in contributing to Clie-AI-LRN! 
 
 ## Ways to Contribute
 
-*   **Add a Concept**: Open an issue using the "Concept Request" template.
-*   **Improve or Fix a Concept**: Submit a Pull Request editing or adding files in the `content/concepts/` directory.
-*   **Add Resources**: Add new high-quality reference links (articles, papers, videos) to the relevant concept file.
-*   **Report a Bug**: Open an issue using the "Bug Report" template.
+*   **Add or Improve a Concept**: Edit or add files in the `src/data/manual-concepts/` directory (Markdown files).
+*   **Add Resources**: Add new high-quality reference links (articles, papers, videos) to the relevant concept file in `src/data/manual-resources/`.
+*   **Report a Bug / Request a Feature**: Open a public issue in our repository.
 
 ## Branching Strategy & Workflow
 
 *   All active feature development must target the `develop` branch. Pull requests targeted directly at `main` will be closed.
-*   The `main` branch is protected and serves as our stable production branch. Netlify automatically deploys to production when code is merged into `main`.
+*   The `main` branch is protected and serves as our stable production branch. Cloudflare Pages automatically deploys to production when code is merged into `main`.
 
 ## Concept File Format
 
-Each hand-authored concept page in `content/concepts/*.mdx` must contain the following frontmatter:
+Each concept page in `src/data/manual-concepts/*.md` must contain the following frontmatter metadata:
 
 ```yaml
 ---
-id: "your-concept-slug"             # unique URL slug: /knowledge/your-concept-slug
-title: "Your Concept Title"
-domains: ["rag", "agents"]          # from the canonical domain list
+id: "concept-slug"                  # Unique URL slug
+title: "Concept Title"
+domains: ["rag", "agents"]          # Domain tags
 difficulty: "beginner"              # beginner | intermediate | advanced
 summary: "One or two sentence description of the concept."
 tags: ["tag1", "tag2"]
-sourceRepo: "manual"                # use "manual" for hand-written / rewritten definitions
-lastUpdated: "2026-06-25"
-featured: false                     # set to true to display on the homepage grid
+sourceRepo: "manual"
+lastUpdated: "2026-06-29"
+featured: false
 ---
 
-## Overview
-Your concept description here...
+# Your Concept Title
+
+Your description here...
 ```
 
 ## Local Development Setup
@@ -41,8 +41,8 @@ To run this project locally, follow these steps:
 
 1.  Clone your fork of the repository:
     ```bash
-    git clone https://github.com/YOUR_USERNAME/ai-engineering-hub.git
-    cd ai-engineering-hub
+    git clone https://github.com/YOUR_USERNAME/clie-ai-lrn.git
+    cd clie-ai-lrn
     ```
 2.  Switch to the `develop` branch:
     ```bash
@@ -52,15 +52,11 @@ To run this project locally, follow these steps:
     ```bash
     npm install
     ```
-4.  Run the content sync pipeline to fetch upstream contents:
-    ```bash
-    bash scripts/sync-content.sh
-    ```
-5.  Parse content and compile JSON data:
+4.  Parse content and compile JSON database tables:
     ```bash
     node scripts/parse-content.mjs
     ```
-6.  Start the Astro local development server:
+5.  Start the Astro local development server:
     ```bash
     npm run dev
     ```
