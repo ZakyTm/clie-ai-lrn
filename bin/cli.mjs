@@ -178,7 +178,9 @@ ${' '.repeat(pad)}\x1b[90m${ruler('─')}\x1b[39m
 
 \x1b[1;33mDESCRIPTION\x1b[22m
 ${indentText(formatMarkdown(term.body))}
-${term.avoid ? `
+${term.descriptionAr ? `
+\x1b[1;33mARABIC GLOSS\x1b[22m
+${indentText(term.descriptionAr)}` : ''}${term.avoid ? `
 \x1b[1;31mAVOID\x1b[22m
 ${indentText(formatMarkdown(term.avoid))}` : ''}
 ${term.usage ? `

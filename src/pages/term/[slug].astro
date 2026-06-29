@@ -138,6 +138,17 @@ const quizQuestions = [
         {term.summary}
       </div>
 
+      {term.descriptionAr && (
+        <section class="figure-frame p-5 bg-surface mb-10 relative" dir="rtl">
+          <div class="figure-corner figure-corner--tl"></div>
+          <div class="figure-corner figure-corner--tr"></div>
+          <div class="figure-corner figure-corner--bl"></div>
+          <div class="figure-corner figure-corner--br"></div>
+          <p class="font-mono text-[10px] text-accent uppercase tracking-widest mb-2">// ARABIC_GLOSS</p>
+          <p class="font-sans text-base md:text-lg text-primary leading-relaxed">{term.descriptionAr}</p>
+        </section>
+      )}
+
       <!-- Main Prose Description -->
       <section class="prose prose-custom font-serif text-base md:text-lg text-primary leading-relaxed mb-12">
         <Fragment set:html={bodyHtml} />
@@ -266,7 +277,7 @@ const quizQuestions = [
           </button>
         </div>
         <a 
-          href={`https://github.com/ZakyTm/ai-engineering-manual/edit/main/src/data/manual-concepts/${term.id}.md`}
+          href={`https://github.com/ZakyTm/clie-ai-lrn/edit/main/src/data/manual-concepts/${term.id}.md`}
           target="_blank"
           rel="noopener noreferrer"
           class="px-3.5 py-1.5 border border-subtle hover:border-accent hover:text-accent rounded transition-all uppercase text-secondary"

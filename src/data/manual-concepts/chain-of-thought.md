@@ -1,6 +1,7 @@
 ---
 id: chain-of-thought
 title: Chain-of-Thought
+descriptionAr: "سلسلة الأفكار (CoT) هي تقنية في هندسة المحفزات تدفع النموذج إلى تفكيك المسألة المعقدة إلى خطوات متوسطة قبل إعطاء الإجابة النهائية. بدلاً من الإخراج المباشر، يُنتج النموذج سلسلة استدلال منطقي تشبه طريقة حل المشكلات عند الإنسان، مما يزيد دقة الإجابات خاصة في المسائل الحسابية والمنطقية."
 summary: A prompt engineering technique that instructs an LLM to break down a complex problem into intermediate reasoning steps before producing the final answer, improving accuracy on multi-step tasks.
 domains:
   - "Section 1 — Fundamentals"
