@@ -1,12 +1,11 @@
 # Clie-AI-LRN (C-AI-L)
 
 ```text
-  █████╗ ██╗    ███╗   ███╗ █████╗ ███╗   ██╗██╗   ██╗ █████╗ ██╗     
- ██╔══██╗██║    ████╗ ████║██╔══██╗████╗  ██║██║   ██║██╔══██╗██║     
- ███████║██║    ██╔████╔██║███████║██╔██╗ ██║██║   ██║███████║██║     
- ██╔══██║██║    ██║╚██╔╝██║██╔══██║██║╚██╗██║██║   ██║██╔══██║██║     
- ██║  ██║██║    ██║ ╚═╝ ██║██║  ██║██║ ╚████║╚██████╔╝██║  ██║███████╗
- ╚═╝  ╚═╝╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+  ____ _     ___ _____        _     ___   _     ____  _   _ 
+ / ___| |   |_ _| ____|      / \   |_ _| | |   |  _ \| \ | |
+| |   | |    | ||  _|  ____ / _ \   | |  | |   | |_) |  \| |
+| |___| |___ | || |___|____/ ___ \  | |  | |___|  _ <| |\  |
+ \____|_____|___|_____|   /_/   \_\|___| |_____|_| \_\_| \_|
                           [ CLIE-AI-LRN v0.2.1 ]
 ```
 
@@ -49,7 +48,7 @@ If you query a concept that does not exist exactly, the CLI runs a **fuzzy searc
 
 *   **Symmetrical Gateway Design**: Balanced split routes between the Dictionary Index (`/glossary`) and the structured Curriculum Roadmap (`/curriculum`).
 *   **Per-Phase Progress Tracking**: Dynamic checkboxes that sync check stats per curriculum phase, updating progress bars on the client browser.
-*   **Socratic Quiz Prompter**: Every term and lesson features a `[QUIZ_ME_PROMPT 📋]` button. Clicking it copies a custom-tailored 3-question prompt (Conceptual, Architecture, Debugging) to your clipboard, ready to paste into your LLM side-window.
+*   **Interactive Socratic Quizzes**: Every glossary term features a 3-question client-side validation test (Conceptual, Architecture, Debugging). Completing quizzes logs your mastery in `localStorage`, unlocking a green star (★) badge next to the concept and updating a global curriculum progress tracker.
 *   **Edit on GitHub Links**: Integrates direct edit paths (`[EDIT_ON_GITHUB ↗]`) at the foot of all terms and lessons for immediate crowdsourced improvements.
 
 ---
