@@ -182,6 +182,7 @@ async function run() {
         id,
         title: data.title,
         summary: data.summary || '',
+        descriptionAr: data.descriptionAr || undefined,
         body,
         avoid: avoid || undefined,
         usage: usage || undefined,
