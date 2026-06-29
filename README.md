@@ -64,12 +64,12 @@ If you find this repository valuable, please consider sponsoring or sending a do
   │                                                          │
   │   [SUPPORT_THE_CREATOR_ON_PAYPAL_TODAY ☕]               │
   │   https://www.paypal.com/cgi-bin/webscr?cmd=_donations   │
-  │   &business=zakaria.toumi.zt@gmail.com&currency_code=USD │
+  │   &business=zktoumiproff@gmail.com&currency_code=USD     │
   │                                                          │
   └──────────────────────────────────────────────────────────┘
 ```
 
-> **Note**: Click the PayPal link above or send donations directly to the creator's address: `zakaria.toumi.zt@gmail.com`.
+> **Note**: Click the PayPal link above or send donations directly to the creator's address: `zktoumiproff@gmail.com`.
 
 ---
 
