@@ -11,6 +11,9 @@ const __dirname = path.dirname(__filename);
 const dataDir = path.resolve(__dirname, '..', 'src', 'data');
 const termsPath = path.join(dataDir, 'terms.json');
 
+// ponytail: detect terminal width for dynamic rulers
+const termWidth = process.stdout.columns || 72;
+
 // Check if terms.json exists
 if (!fs.existsSync(termsPath)) {
   console.error('\n\x1b[1;31m[ERROR] Dictionary database not found!\x1b[22m');
@@ -64,10 +67,19 @@ if (matchedTerm) {
   }
 }
 
+function ruler(char = '─') {
+  return char.repeat(Math.min(termWidth, 72));
+}
+
 // Help documentation menu
 function printHelp() {
+  const w = Math.min(termWidth, 72);
+  const pad = Math.max(2, Math.floor((w - 30) / 2));
+  const sp = ' '.repeat(pad);
+
   console.log(`
-\x1b[1mCAIL(1)\x1b[22m                       \x1b[1mClie-AI-LRN Manual\x1b[22m                       \x1b[1mCAIL(1)\x1b[22m
+${sp}\x1b[1mCAIL(1)\x1b[22m${' '.repeat(Math.max(1, w - 28 - pad*2))}\x1b[1mClie-AI-LRN Manual\x1b[22m${' '.repeat(Math.max(1, w - 28 - pad*2))}\x1b[1mCAIL(1)\x1b[22m
+${' '.repeat(pad)}\x1b[90m${ruler('─')}\x1b[39m
 
 \x1b[1;33mNAME\x1b[22m
        \x1b[1mman-ai\x1b[22m - Search and read AI engineering concepts directly in your shell
@@ -96,44 +108,47 @@ function printHelp() {
        \x1b[36mman-ai subagent\x1b[39m
               Display the manual page for Subagents and tool delegation.
 
-\x1b[1mClie-AI-LRN v0.2.1\x1b[22m                  June 2026                           \x1b[1mZakyTm Repo\x1b[22m
+\x1b[90m${ruler('─')}\x1b[39m
+\x1b[1mClie-AI-LRN v0.2.1\x1b[22m${' '.repeat(Math.max(1, w - 52))}\x1b[1mZakyTm Repo\x1b[22m
   `);
 }
 
 // Print alphabetical list of terms
 function printList() {
-  console.log(`\n\x1b[1;33mCLIE-AI-LRN - ALL COMPILED TERMS:\x1b[22m`);
-  
-  // Sort alphabetically by title
   const sorted = [...terms].sort((a, b) => a.title.localeCompare(b.title));
-  
+  const maxIdLen = Math.max(...sorted.map(t => t.id.length)) + 2;
+
+  console.log(`\n\x1b[1;33mCLIE-AI-LRN - ALL COMPILED TERMS:\x1b[22m\n`);
   sorted.forEach(t => {
-    console.log(`  \x1b[36m${t.id.padEnd(25)}\x1b[39m \x1b[90m•\x1b[39m ${t.title}`);
+    console.log(`  \x1b[36m${t.id.padEnd(maxIdLen)}\x1b[39m\x1b[90m•\x1b[39m ${t.title}`);
   });
-  
   console.log(`\n\x1b[1mTotal compiled terms: ${terms.length}\x1b[22m\n`);
 }
 
 // Format Markdown for terminal display
 function formatMarkdown(md) {
   if (!md) return '';
-  return md
-    // Replace headers with bold headings
-    .replace(/^# (.*)$/gm, '\x1b[1m$1\x1b[22m')
-    .replace(/^## (.*)$/gm, '\x1b[1m$1\x1b[22m')
-    .replace(/^### (.*)$/gm, '\x1b[1m$1\x1b[22m')
-    // Highlight bold text
-    .replace(/\*\*(.*?)\*\*/g, '\x1b[1m$1\x1b[22m')
-    .replace(/__(.*?)__/g, '\x1b[1m$1\x1b[22m')
-    // Highlight inline code
-    .replace(/`(.*?)`/g, '\x1b[36m$1\x1b[39m')
-    // Links: [Text](URL) -> Text
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '\x1b[4m$1\x1b[24m')
+  const lines = md.split('\n');
+  // ponytail: simple line-based processing, no heavy parser
+  return lines.map(line => {
+    // Headers
+    if (/^# /.test(line)) return `\x1b[1m${line.replace(/^# /, '')}\x1b[22m`;
+    if (/^## /.test(line)) return `\x1b[1m${line.replace(/^## /, '')}\x1b[22m`;
+    if (/^### /.test(line)) return `\x1b[1m${line.replace(/^### /, '')}\x1b[22m`;
+    // Bold
+    line = line.replace(/\*\*(.*?)\*\*/g, '\x1b[1m$1\x1b[22m')
+               .replace(/__(.*?)__/g, '\x1b[1m$1\x1b[22m');
+    // Inline code
+    line = line.replace(/`([^`]+)`/g, '\x1b[36m$1\x1b[39m');
+    // Links: [Text](URL) -> underlined Text
+    line = line.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '\x1b[4m$1\x1b[24m');
     // List items
-    .replace(/^\s*-\s+/gm, '  • ')
-    .replace(/^\s*\*\s+/gm, '  • ')
+    line = line.replace(/^\s*-\s+/, '  • ')
+               .replace(/^\s*\*\s+/, '  • ');
     // Blockquotes
-    .replace(/^>\s+(.*)$/gm, '  \x1b[3m| $1\x1b[23m');
+    line = line.replace(/^>\s+(.*)$/, '  \x1b[3m| $1\x1b[23m');
+    return line;
+  }).join('\n');
 }
 
 // Helper to indent paragraph lines
@@ -148,8 +163,12 @@ function printManPage(term) {
     ? '\x1b[1;32m[VERIFIED MANUAL ENTRY]\x1b[22m' 
     : '\x1b[1;31m[UNVERIFIED REFERENCE ENTRY]\x1b[22m';
 
+  const w = Math.min(termWidth, 72);
+  const pad = Math.max(2, Math.floor((w - 30) / 2));
+
   console.log(`
-\x1b[1mCAIL(1)\x1b[22m                       \x1b[1mClie-AI-LRN Manual\x1b[22m                       \x1b[1mCAIL(1)\x1b[22m
+${' '.repeat(pad)}\x1b[1mCAIL(1)\x1b[22m${' '.repeat(Math.max(1, w - 28 - pad*2))}\x1b[1mClie-AI-LRN Manual\x1b[22m${' '.repeat(Math.max(1, w - 28 - pad*2))}\x1b[1mCAIL(1)\x1b[22m
+${' '.repeat(pad)}\x1b[90m${ruler('─')}\x1b[39m
 
 \x1b[1;33mNAME\x1b[22m
        \x1b[1m${term.title}\x1b[22m - ${term.summary}
@@ -169,6 +188,7 @@ ${term.related && term.related.length ? `
 \x1b[1;33mSEE ALSO\x1b[22m
        ${term.related.join(', ')}` : ''}
 
-\x1b[1mClie-AI-LRN v0.2.1\x1b[22m                  June 2026                           \x1b[1mZakyTm Repo\x1b[22m
+\x1b[90m${ruler('─')}\x1b[39m
+\x1b[1mClie-AI-LRN v0.2.1\x1b[22m${' '.repeat(Math.max(1, w - 52))}\x1b[1mZakyTm Repo\x1b[22m
   `);
 }

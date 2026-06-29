@@ -82,7 +82,7 @@ const { activeTab } = Astro.props;
 
       <!-- GitHub Link -->
       <a 
-        href="https://github.com/ZakyTm/ai-engineering-manual" 
+        href="https://github.com/ZakyTm/clie-ai-lrn" 
         target="_blank" 
         rel="noopener noreferrer" 
         class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 border border-subtle rounded hover:bg-surface hover:text-accent text-secondary font-mono text-[10px] uppercase tracking-wider transition-all duration-fast"
@@ -101,6 +101,7 @@ const { activeTab } = Astro.props;
         id="mobile-menu-toggle" 
         class="lg:hidden p-2 border border-subtle rounded-md hover:bg-surface text-secondary"
         aria-label="Open Menu"
+        aria-expanded="false"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="4" x2="20" y1="12" y2="12"/>
@@ -111,9 +112,13 @@ const { activeTab } = Astro.props;
     </div>
   </div>
 
-  <!-- Mobile Dropdown Navigation -->
-  <div id="mobile-menu" class="hidden lg:hidden border-t border-subtle bg-canvas px-4 py-4 transition-colors duration-normal">
-    <nav class="flex flex-col space-y-4 font-mono text-xs tracking-widest uppercase">
+  <!-- Mobile Dropdown Navigation (slide animation) -->
+  <div 
+    id="mobile-menu" 
+    class="lg:hidden border-t border-subtle bg-canvas overflow-hidden transition-all duration-300 ease-out"
+    style="max-height: 0; opacity: 0;"
+  >
+    <nav class="flex flex-col space-y-4 font-mono text-xs tracking-widest uppercase px-4 py-4">
       <a href="/" class={`hover:text-accent py-2 ${activeTab === 'home' ? 'text-accent font-bold' : 'text-secondary'}`}>
         [01] HOME
       </a>
@@ -127,7 +132,7 @@ const { activeTab } = Astro.props;
         [04] PREP
       </a>
       <a 
-        href="https://github.com/ZakyTm/ai-engineering-manual" 
+        href="https://github.com/ZakyTm/clie-ai-lrn" 
         target="_blank" 
         rel="noopener noreferrer" 
         class="hover:text-accent py-2 border-t border-subtle text-secondary"
@@ -139,7 +144,7 @@ const { activeTab } = Astro.props;
 </header>
 
 <style>
-  /* Custom header styles */
+  /* ponytail: CSS transition for mobile menu — no JS animation lib needed */
 </style>
 
 <script>
@@ -149,8 +154,28 @@ const { activeTab } = Astro.props;
   
   if (mobileToggle && mobileMenu) {
     mobileToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+      const isOpen = mobileMenu.style.maxHeight !== '0px' && mobileMenu.style.maxHeight !== '';
+      if (isOpen) {
+        mobileMenu.style.maxHeight = '0px';
+        mobileMenu.style.opacity = '0';
+        mobileToggle.setAttribute('aria-expanded', 'false');
+      } else {
+        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+        mobileMenu.style.opacity = '1';
+        mobileToggle.setAttribute('aria-expanded', 'true');
+      }
     });
+
+    // ponytail: recalc max-height if nav content might change on resize
+    const nav = mobileMenu.querySelector('nav');
+    if (nav) {
+      const observer = new ResizeObserver(() => {
+        if (mobileMenu.style.maxHeight !== '0px' && mobileMenu.style.maxHeight !== '') {
+          mobileMenu.style.maxHeight = nav.scrollHeight + 'px';
+        }
+      });
+      observer.observe(nav);
+    }
   }
 
   // Search Modal Event Trigger
@@ -189,7 +214,7 @@ const { activeTab } = Astro.props;
   // Fetch GitHub stars dynamically
   const starElement = document.getElementById('github-stars');
   if (starElement) {
-    fetch('https://api.github.com/repos/ZakyTm/ai-engineering-manual')
+    fetch('https://api.github.com/repos/ZakyTm/clie-ai-lrn')
       .then(res => {
         if (!res.ok) throw new Error();
         return res.json();
