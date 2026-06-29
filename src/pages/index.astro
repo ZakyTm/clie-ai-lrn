@@ -35,14 +35,33 @@ const featuredTerms = ['rag', 'agents', 'mcp-tooling', 'embeddings', 'vector-dat
 
   <main class="flex-grow container-site py-12">
     <!-- Hero Block -->
-    <section class="max-w-3xl mb-12">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent mb-3">// CLIE_AI_LRN</p>
-      <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight mb-4">
-        Clie-AI-LRN
-      </h1>
-      <p class="text-secondary text-base md:text-lg font-serif leading-relaxed">
-        A structured, plain-English dictionary of AI engineering concepts, and a step-by-step curriculum roadmap. Look up emerging jargon, understand core mechanics, and learn to build AI systems from scratch.
-      </p>
+    <section class="max-w-3xl mb-12 flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
+      <div class="w-20 h-20 shrink-0 border border-subtle bg-surface p-3.5 rounded flex items-center justify-center text-primary shadow-md">
+        <!-- SVG Monogram Logo (Chameleon theme aware) -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-full h-full transition-colors duration-normal" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Outer C (Accent color) -->
+          <path d="M 22 8 H 8 V 20 H 22" class="text-accent" />
+          <!-- Outer L (Accent color) - continues down from the back of the C and underlines it -->
+          <path d="M 8 20 V 26 H 25" class="text-accent" />
+          
+          <!-- Inner A -->
+          <path d="M 11 17 L 15 11 L 19 17" />
+          <path d="M 13 15 H 17" />
+          <!-- Inner I -->
+          <path d="M 22 11 V 17" />
+          <path d="M 20.5 11 H 23.5" />
+          <path d="M 20.5 17 H 23.5" />
+        </svg>
+      </div>
+      <div>
+        <p class="font-mono text-xs uppercase tracking-widest text-accent mb-2">// CLIE_AI_LRN</p>
+        <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight mb-3">
+          Clie-AI-LRN
+        </h1>
+        <p class="text-secondary text-base md:text-lg font-serif leading-relaxed">
+          A structured, plain-English dictionary of AI engineering concepts, and a step-by-step curriculum roadmap. Look up emerging jargon, understand core mechanics, and learn to build AI systems from scratch.
+        </p>
+      </div>
     </section>
 
     <!-- SIGNATURE: Terminal REPL Search -->
