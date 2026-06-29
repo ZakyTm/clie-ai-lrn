@@ -1,102 +1,157 @@
-# Clie-AI-LRN (C-AI-L)
+<p align="center">
+  <!-- Site-brand SVG monogram (C + A + I + L) — matches clie-ai-lrn.pages.dev -->
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="64" height="64" fill="none">
+    <style>
+      .accent { stroke: #6a9fcc; }
+      .body { stroke: currentColor; }
+      @media (prefers-color-scheme: dark) {
+        .body { stroke: #ebe7e4; }
+      }
+      @media (prefers-color-scheme: light) {
+        .body { stroke: #252f3d; }
+      }
+    </style>
+    <path d="M 34 8 H 12 V 28 H 34" class="accent" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 12 28 V 38 H 38" class="accent" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 16 25 L 23 11 L 30 25" class="body" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 20 20 H 26" class="body" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 34 13 V 25" class="body" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 31 13 H 37" class="body" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 31 25 H 37" class="body" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</p>
 
-```text
-  ____ _     ___ _____        _     ___   _     ____  _   _ 
- / ___| |   |_ _| ____|      / \   |_ _| | |   |  _ \| \ | |
-| |   | |    | ||  _|  ____ / _ \   | |  | |   | |_) |  \| |
-| |___| |___ | || |___|____/ ___ \  | |  | |___|  _ <| |\  |
- \____|_____|___|_____|   /_/   \_\|___| |_____|_| \_\_| \_|
-                          [ CLIE-AI-LRN v0.2.1 ]
-```
+<p align="center">
+  <code><b>CLIE_AI_LRN</b> v0.2.1</code><br>
+  <i>A structured, plain-English dictionary of AI engineering concepts<br>and a step-by-step curriculum roadmap.</i>
+</p>
 
-An open-source, plain-English dictionary of AI engineering concepts and a step-by-step curriculum learning roadmap. Designed like a printed dictionary crossed with a Unix `man` page under a retro phosphor terminal.
+<p align="center">
+  <a href="https://clie-ai-lrn.pages.dev"><b>[VISIT_LIVE_MANUAL]</b></a>
+  &nbsp;&nbsp;
+  <a href="./CONTRIBUTING.md"><b>[CONTRIBUTING]</b></a>
+  &nbsp;&nbsp;
+  <a href="./LICENSE"><b>[GPL-3.0]</b></a>
+</p>
 
-*   **Live Web Manual**: Hostable statically (pre-rendered for Cloudflare Pages).
-*   **Local CLI Client**: Query definitions directly from your shell command line.
-*   **GPL-3.0 Protected**: Free and open-source public good, legally defended from commercial paywall exploitation.
+<br>
 
----
+**`// OVERVIEW`**
 
-## 🛠️ The Local CLI (`man-ai`)
+An open-source, plain-English reference for AI engineering concepts — designed like a printed dictionary crossed with a Unix `man` page under a retro phosphor terminal. Ships as a static Astro site and a command-line CLI lookup tool.
 
-This project packages the entire dictionary database as a local executable command line search helper. Developers can lookup definitions without opening a browser:
+- **Static site** — deploy to Cloudflare Pages, Netlify, or any static host.
+- **Local CLI** — query definitions directly from your shell (`man-ai <concept>`).
+- **GPL-3.0** — free and open-source, immune to commercial paywall extraction.
 
-### Installation (Local Dev)
+<br>
+
+**`// QUICKSTART`**
+
 ```bash
+git clone https://github.com/ZakyTm/clie-ai-lrn.git
+cd clie-ai-lrn
 npm install
-npm run cli -- --help
+node scripts/parse-content.mjs   # build the dictionary database
+npm run dev                       # start dev server at localhost:4321
 ```
 
-### Usage Examples
-```bash
-# Display the manual page for a specific concept
-npm run cli rag
-npm run cli subagent
-
-# List all compiled dictionary terms alphabetically
-npm run cli -- --list
-
-# Get help & command parameters
-npm run cli -- --help
-```
-
-If you query a concept that does not exist exactly, the CLI runs a **fuzzy search** and suggests closely matching concepts.
-
----
-
-## ⚡ Key Features
-
-*   **Symmetrical Gateway Design**: Balanced split routes between the Dictionary Index (`/glossary`) and the structured Curriculum Roadmap (`/curriculum`).
-*   **Per-Phase Progress Tracking**: Dynamic checkboxes that sync check stats per curriculum phase, updating progress bars on the client browser.
-*   **Interactive Socratic Quizzes**: Every glossary term features a 3-question client-side validation test (Conceptual, Architecture, Debugging). Completing quizzes logs your mastery in `localStorage`, unlocking a green star (★) badge next to the concept and updating a global curriculum progress tracker.
-*   **Edit on GitHub Links**: Integrates direct edit paths (`[EDIT_ON_GITHUB ↗]`) at the foot of all terms and lessons for immediate crowdsourced improvements.
-
----
-
-## ☕ Support the Creator / Donate
-
-This project is built and maintained as a public good to make AI engineering education accessible to everyone for free. The creator of this manual is currently **jobless** and dedicating full-time labor to establishing this open-source reference library.
-
-If you find this repository valuable, please consider sponsoring or sending a donation to support the work. Financial contributions help fund living costs so I can keep editing, rephrasing, and adding advanced lessons to the curriculum.
-
-```text
-  ┌──────────────────────────────────────────────────────────┐
-  │                                                          │
-  │   [SUPPORT_THE_CREATOR_ON_PAYPAL_TODAY ☕]               │
-  │   https://www.paypal.com/cgi-bin/webscr?cmd=_donations   │
-  │   &business=zakaria.toumi.zt@gmail.com&currency_code=USD │
-  │                                                          │
-  └──────────────────────────────────────────────────────────┘
-```
-
-> **Note**: Click the PayPal link above or send donations directly to the creator's address: `zakaria.toumi.zt@gmail.com`.
-
----
-
-## ⚖️ GPL-3.0 Copyleft License
-
-This repository is licensed under the **GNU GPL v3 (or later)**. 
-
-### Why Copyleft?
-*   **No Commercial Hijacking**: Unlike permissive licenses (like MIT), anyone who forks, redistributes, or modifies this manual **must** open-source their changes under the same GPL-3.0 license. You cannot wrap this content in a proprietary commercial paywall.
-*   **Dual-Licensing Ready**: The author retains full copyright to the core manual. If a corporation wants to use this curriculum structure in a closed-source proprietary training platform, they must buy a commercial license directly from the author.
-*   **Contributor Terms**: By contributing code or markdown definitions to this repository, you agree to grant the author joint copyright to relicense modifications (enabling potential commercial dual-licensing to fund the project).
-
----
-
-## 🚀 Local Development
-
-To run the static compiler and launch the development environment locally:
+Static build for production:
 
 ```bash
-# 1. Install dependencies
-npm install
-
-# 2. Run the content database compile pipeline
-node scripts/parse-content.mjs
-
-# 3. Start the local Astro dev server
-npm run dev
+npm run build                     # output in dist/
 ```
 
-Deploying is fully static: run `npm run build` and connect your GitHub repository to **Cloudflare Pages** pointing to the output folder `dist/` with zero server database overhead.
+<br>
+
+**`// CLI — MAN-AI`**
+
+The entire dictionary is packaged as a local command-line tool.
+
+```
+$ man-ai <concept-slug>
+$ man-ai --list
+$ man-ai --help
+```
+
+```bash
+npm run cli rag                   # display manual page for RAG
+npm run cli subagent              # display manual page for subagents
+npm run cli -- --list             # list all compiled terms
+```
+
+On an exact miss the CLI runs a fuzzy search and suggests the closest matches.
+
+<br>
+
+**`// FEATURES`**
+
+- **[01] DICTIONARY GATEWAY** — symmetrical split between glossary index (`/glossary`) and curriculum roadmap (`/curriculum`).
+- **[02] PROGRESS TRACKING** — per-phase checkboxes persisted in `localStorage` with real-time progress bars.
+- **[03] SOCRATIC QUIZZES** — every glossary term includes a 3-question client-side validation test (conceptual, architecture, debugging). Mastery unlocks a star badge and updates global curriculum progress.
+- **[04] EDIT ON GITHUB** — direct edit links on every term and lesson page for immediate crowdsourced improvements.
+- **[05] THEME Toggle** — phosphor CRT (dark) and paper dictionary (light) modes with preference persistence.
+- **[06] TERMINAL REPL** — live autocomplete search console on the homepage with typewriter placeholder effect.
+
+<br>
+
+**`// SECTIONS`**
+
+| § | Section | Terms |
+|---|---------|-------|
+| 01 | The Model & Parameters | 12 |
+| 02 | Tokenization & Embedding | 8 |
+| 03 | Attention & Context | 7 |
+| 04 | Output & Sampling | 6 |
+| 05 | Parametric & Contextual Memory | 8 |
+| 06 | Retrieval-Augmented Generation | 5 |
+| 07 | Tools & Function Calling | 6 |
+| 08 | Multi-Agent Orchestration | 7 |
+| 09 | Skills, Subagents & Review | 7 |
+| 10 | Performance & Quality Assurance | 7 |
+
+<br>
+
+**`// CONTRIBUTING`**
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full guide.
+
+Quick summary: fork → branch from `develop` → add or edit concept files in `src/data/manual-concepts/` → PR targeting `ZakyTm:develop`.
+
+```
+┌───────────────────────────────────────────────────────────┐
+│  // CONTRIBUTION_REQUIREMENTS                              │
+│                                                           │
+│  [01] File: src/data/manual-concepts/<slug>.md             │
+│  [02] Frontmatter: id, title, domains, summary, tags       │
+│  [03] Sections: body, AVOID, USAGE                         │
+│  [04] Target: develop branch                               │
+└───────────────────────────────────────────────────────────┘
+```
+
+<br>
+
+**`// SUPPORT`**
+
+Built and maintained as a public good. The creator is an independent developer dedicating full-time effort to this open-source reference library, and is open to new roles and consulting opportunities.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  // SUPPORT_THE_PROJECT                                      │
+│                                                             │
+│  PayPal: https://www.paypal.com/cgi-bin/webscr               │
+│          ?cmd=_donations&business=zktoumiproff@gmail.com     │
+│                                                             │
+│  Direct: zktoumiproff@gmail.com                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+<br>
+
+**`// LICENSE`**
+
+GNU General Public License v3.0 (or later). See [LICENSE](./LICENSE).
+
+- **No commercial hijacking** — forks and redistributions must stay open under GPL-3.0. Cannot wrap in a proprietary paywall.
+- **Dual-licensing available** — contact the author for closed-source commercial use.
+- **Contributor terms** — by contributing you grant joint copyright to relicense modifications (enabling potential commercial dual-licensing to fund the project).
