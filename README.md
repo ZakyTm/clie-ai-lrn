@@ -9,6 +9,14 @@
                           [ CLIE-AI-LRN v0.2.1 ]
 ```
 
+<div align="center">
+  <img src="./public/screenshots/homepage.png" width="32%" alt="Homepage View" />
+  <img src="./public/screenshots/curriculum.png" width="32%" alt="Curriculum Roadmap" />
+  <img src="./public/screenshots/quiz.png" width="32%" alt="Socratic Quiz View" />
+</div>
+
+<br/>
+
 An open-source, plain-English dictionary of AI engineering concepts and a step-by-step curriculum learning roadmap. Designed like a printed dictionary crossed with a Unix `man` page under a retro phosphor terminal.
 
 *   **Live Web Manual**: Hostable statically (pre-rendered for Cloudflare Pages).
