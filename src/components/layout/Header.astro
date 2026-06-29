@@ -56,36 +56,52 @@ const { activeTab } = Astro.props;
 
     <!-- Right Controls -->
     <div class="flex items-center space-x-4">
-      <!-- Search Icon Trigger -->
+      <!-- Search Pill Trigger -->
       <button 
         id="header-search-toggle" 
-        class="p-2 border border-subtle rounded-md hover:bg-surface hover:text-accent text-secondary transition-all duration-fast"
+        class="flex items-center gap-2.5 px-3 py-1.5 border border-subtle bg-surface/30 text-secondary hover:text-accent rounded-full text-[10px] font-mono cursor-pointer transition-all duration-fast select-none w-36 sm:w-44"
         aria-label="Open Search"
         type="button"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-secondary/70">
           <circle cx="11" cy="11" r="8"/>
           <path d="m21 21-4.3-4.3"/>
         </svg>
+        <span class="text-secondary/70">SEARCH...</span>
+        <kbd class="ml-auto hidden xs:inline-block px-1.5 py-0.5 border border-subtle/50 rounded text-[8px] bg-canvas/80 text-secondary/50 font-sans tracking-wide">CTRL K</kbd>
       </button>
 
-      <!-- Theme Toggle -->
+      <!-- Theme Toggle (Pill Style) -->
       <button 
         id="theme-toggle" 
-        class="font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 border border-subtle rounded hover:bg-surface hover:text-accent text-secondary transition-all duration-fast flex items-center gap-1.5"
+        class="inline-flex items-center rounded-full border border-subtle p-0.5 overflow-hidden cursor-pointer bg-surface/30 hover:border-accent transition-all duration-fast select-none"
         aria-label="Toggle Theme"
         type="button"
       >
-        <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-        <span id="theme-toggle-text">THEME: CRT</span>
+        <!-- Sun (Light Mode Icon) -->
+        <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 p-1.5 rounded-full transition-all duration-fast">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+        <!-- Moon (Dark/CRT Mode Icon) -->
+        <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 p-1.5 rounded-full transition-all duration-fast">
+          <path d="M12.3 1.3a10 10 0 0 0-3.7 19.4 10.5 10.5 0 0 0 13-13c-.1-.4-.6-.6-1-.4a6 6 0 0 1-7.9-7.9c.2-.4 0-.9-.4-1.1Z"></path>
+        </svg>
       </button>
 
-      <!-- GitHub Link -->
+      <!-- GitHub Link (Pill Style) -->
       <a 
         href="https://github.com/ZakyTm/clie-ai-lrn" 
         target="_blank" 
         rel="noopener noreferrer" 
-        class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 border border-subtle rounded hover:bg-surface hover:text-accent text-secondary font-mono text-[10px] uppercase tracking-wider transition-all duration-fast"
+        class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 border border-subtle rounded-full hover:bg-surface hover:text-accent text-secondary font-mono text-[10px] uppercase tracking-wider transition-all duration-fast"
         aria-label="GitHub Repository"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -163,11 +179,22 @@ const { activeTab } = Astro.props;
 
   // Theme Toggle Logic
   const themeToggle = document.getElementById('theme-toggle');
-  const themeToggleText = document.getElementById('theme-toggle-text');
+  const sunIcon = document.getElementById('theme-icon-sun');
+  const moonIcon = document.getElementById('theme-icon-moon');
   
   function updateThemeUI(theme: string) {
-    if (themeToggleText) {
-      themeToggleText.innerText = theme === 'dark' ? 'THEME: CRT' : 'THEME: PAPER';
+    if (theme === 'dark') {
+      moonIcon?.classList.add('bg-accent', 'text-canvas', 'font-bold');
+      moonIcon?.classList.remove('text-secondary/50');
+      
+      sunIcon?.classList.remove('bg-accent', 'text-canvas', 'font-bold');
+      sunIcon?.classList.add('text-secondary/50');
+    } else {
+      sunIcon?.classList.add('bg-accent', 'text-canvas', 'font-bold');
+      sunIcon?.classList.remove('text-secondary/50');
+      
+      moonIcon?.classList.remove('bg-accent', 'text-canvas', 'font-bold');
+      moonIcon?.classList.add('text-secondary/50');
     }
   }
 
