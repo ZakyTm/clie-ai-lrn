@@ -27,4 +27,6 @@ pnpm-debug.log*
 content/
 dist/
 .astro/
-
+# AI assistant context logs & configs
+CLAUDE.md
+AGENTS.md

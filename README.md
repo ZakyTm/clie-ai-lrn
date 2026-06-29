@@ -1,11 +1,11 @@
 # Clie-AI-LRN (C-AI-L)
 
 ```text
-  ____ _     ___ _____        _     ___   _     ____  _   _ 
- / ___| |   |_ _| ____|      / \   |_ _| | |   |  _ \| \ | |
-| |   | |    | ||  _|  ____ / _ \   | |  | |   | |_) |  \| |
-| |___| |___ | || |___|____/ ___ \  | |  | |___|  _ <| |\  |
- \____|_____|___|_____|   /_/   \_\|___| |_____|_| \_\_| \_|
+  ____ _     ___ _____       _     ___       _     ____  _   _ 
+ / ___| |   |_ _|  ___|     / \   |_ _|     / \   |  _ \| \ | |
+| |   | |    | ||  _|  ___ / _ \   | | ___ / _ \  | |_) |  \| |
+| |___| |___ | || |___|___/ ___ \  | ||___/ ___ \ |  _ <| |\  |
+ \____|_____|___|_____|  /_/   \_\|___|  /_/   \_\|_| \_\_| \_|
                           [ CLIE-AI-LRN v0.2.1 ]
 ```
 
@@ -55,9 +55,9 @@ If you query a concept that does not exist exactly, the CLI runs a **fuzzy searc
 
 ## ☕ Support the Creator / Donate
 
-This project is built and maintained as a public good to make AI engineering education accessible to everyone for free. The creator of this manual is currently **jobless** and dedicating full-time labor to establishing this open-source reference library.
+This project is built and maintained as a public good to make AI engineering education accessible to everyone for free. The creator of this manual is an independent developer dedicating full-time effort to establishing this open-source reference library, and is currently open to new roles and consulting opportunities.
 
-If you find this repository valuable, please consider sponsoring or sending a donation to support the work. Financial contributions help fund living costs so I can keep editing, rephrasing, and adding advanced lessons to the curriculum.
+If you find this repository valuable, please consider sponsoring or sending a donation to support the continuation of this work. Contributions help support this project, allowing for continuous updates and advanced curriculum additions.
 
 ```text
   ┌──────────────────────────────────────────────────────────┐
