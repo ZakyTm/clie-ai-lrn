@@ -82,7 +82,7 @@ const { activeTab } = Astro.props;
 
       <!-- GitHub Link -->
       <a 
-        href="https://github.com/ZakyTm/ai-engineering-manual" 
+        href="https://github.com/ZakyTm/clie-ai-lrn" 
         target="_blank" 
         rel="noopener noreferrer" 
         class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 border border-subtle rounded hover:bg-surface hover:text-accent text-secondary font-mono text-[10px] uppercase tracking-wider transition-all duration-fast"
@@ -127,7 +127,7 @@ const { activeTab } = Astro.props;
         [04] PREP
       </a>
       <a 
-        href="https://github.com/ZakyTm/ai-engineering-manual" 
+        href="https://github.com/ZakyTm/clie-ai-lrn" 
         target="_blank" 
         rel="noopener noreferrer" 
         class="hover:text-accent py-2 border-t border-subtle text-secondary"
@@ -189,7 +189,7 @@ const { activeTab } = Astro.props;
   // Fetch GitHub stars dynamically
   const starElement = document.getElementById('github-stars');
   if (starElement) {
-    fetch('https://api.github.com/repos/ZakyTm/ai-engineering-manual')
+    fetch('https://api.github.com/repos/ZakyTm/clie-ai-lrn')
       .then(res => {
         if (!res.ok) throw new Error();
         return res.json();
